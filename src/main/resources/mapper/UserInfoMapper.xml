@@ -23,7 +23,7 @@
 				  CRT_DT,
 				  UPDT_ID,
 				  UPDT_DT
-		     FROM rushplus.TB_USER_INFO     
+		     FROM waltz.TB_USER_INFO     
 		 <where>
 		     <if test='@org.apache.commons.lang3.StringUtils@isNotEmpty( userId )'>
 		     AND USER_ID = #{userId, jdbcType=VARCHAR}
