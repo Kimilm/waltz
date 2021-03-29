@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.mybrainfficial.waltzProject.testTable">
+	<select id="getTestTableList" parameterType="TestTableVO" resultType="TestTableVO">
+		  SELECT TT.COL1
+		       , TT.COL2
+		       , TT.COL3
+		       , TT.COL4
+		    FROM TEST_TABLE TT
+		 <where>
+		     <if test='@org.apache.commons.lang3.StringUtils@isNotEmpty( col1 )'>
+		     AND TT.COL1 = #{col1, jdbcType=VARCHAR}
+		     </if>
+		</where>
+		ORDER BY TT.COL1 DESC
+	</select>
+	
+	<insert id="insertTestTable" parameterType="TestTableVO" >
+		  INSERT INTO TEST_TABLE (COL1, COL2, COL3, COL4) VALUES
+		  (
+		  	#{col1, jdbcType=VARCHAR},
+		  	#{col2, jdbcType=VARCHAR},
+		  	#{col3, jdbcType=VARCHAR},
+		  	#{col4, jdbcType=VARCHAR}
+		  )
+	</insert>
+	<update id="updateTestTable" parameterType="TestTableVO" >
+		  UPDATE TEST_TABLE
+		    <set>
+			    <if test='@org.apache.commons.lang3.StringUtils@isNotEmpty( col2 )'>
+			     COL2 = #{col2, jdbcType=VARCHAR},
+			    </if>
+			    <if test='@org.apache.commons.lang3.StringUtils@isNotEmpty( col3 )'>
+			     COL3 = #{col3, jdbcType=VARCHAR},
+			    </if>
+			    <if test='@org.apache.commons.lang3.StringUtils@isNotEmpty( col4 )'>
+			     COL4 = #{col4, jdbcType=VARCHAR},
+			    </if>
+		    </set> 
+		   <where>
+		     AND COL1 = #{col1, jdbcType=VARCHAR}
+		   </where>
+	</update>
+	<delete id="deleteTestTable" parameterType="TestTableVO" >
+		  DELETE FROM TEST_TABLE
+		   <where>
+		     AND COL1 = #{col1, jdbcType=VARCHAR}
+		   </where>
+	</delete>
+</mapper>

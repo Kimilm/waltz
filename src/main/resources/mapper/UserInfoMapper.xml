@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.mybrainfficial.waltzProject.userInfo">
+	<select id="selectUserInfo" parameterType="UserInfoVO" resultType="UserInfoVO">
+		   SELECT USER_ID,
+				  USER_PWD,
+				  USER_NM,
+				  USER_AGE,
+				  USER_GEN,
+				  USER_REG_DT,
+				  USER_POST_CNT,
+				  USER_LAP_YN,
+				  USER_GRP_CD,
+				  MEM_GRADE,
+				  PRIOR_TYPE,
+				  USER_PWD_ERR_NUMBS,
+				  USER_ID_LCK_YN,
+				  USER_INIT_YN,
+				  USER_INIT_DATE,
+				  USER_LST_CONN_DT,
+				  CRT_ID,
+				  CRT_DT,
+				  UPDT_ID,
+				  UPDT_DT
+		     FROM rushplus.TB_USER_INFO     
+		 <where>
+		     <if test='@org.apache.commons.lang3.StringUtils@isNotEmpty( userId )'>
+		     AND USER_ID = #{userId, jdbcType=VARCHAR}
+		     </if>
+		</where>
+	</select>
+
+	<insert id="insertUserInfo" parameterType="UserInfoVO" >
+		  INSERT INTO TBL_USER(
+			 	USER_ID,
+			    USER_PW,
+			    USER_NM,
+			    USER_EMAIL,
+			    USER_POINT,
+			    SESSION_KEY,
+			    SESSION_LIMIT,
+			    REG_DATE,
+			    MOD_DATE,
+			    USER_JOIN_DATE,
+			    USER_LOGIN_DATE,
+			    USER_INTRO,
+			    INIT_DATE,
+			    FAIL_CNT,
+			    LOCK_FLAG
+          ) VALUES(
+		  	 #{userId, jdbcType=VARCHAR},
+		  	 #{userPw, jdbcType=VARCHAR},
+		  	 #{userNm, jdbcType=VARCHAR},
+		  	 #{userEmail, jdbcType=VARCHAR},
+		  	 #{userPoint, jdbcType=INTEGER},
+		  	 #{sessionKey, jdbcType=VARCHAR},
+		  	 #{sessionLimit, jdbcType=VARCHAR},
+		  	 SYSDATE,
+		  	 '',
+		  	 SYSDATE,
+		  	 SYSDATE,
+		  	 #{userIntro, jdbcType=VARCHAR},
+		  	 SYSDATE,
+		  	 '0',
+		  	 'N'
+		  )
+	</insert>
+
+
+	<update id="updateUserInfo" parameterType="UserInfoVO" >
+		  UPDATE TBL_USER
+		    <set>
+		    	MOD_DATE = SYSDATE,
+			    <if test='@org.apache.commons.lang3.StringUtils@isNotEmpty( userNm )'>
+					USER_NM = #{userNm, jdbcType=VARCHAR},
+			    </if>
+			    <if test='@org.apache.commons.lang3.StringUtils@isNotEmpty( userEmail )'>
+					USER_EMAIL = #{userEmail, jdbcType=VARCHAR},
+			    </if>
+			    <if test='@org.apache.commons.lang3.StringUtils@isNotEmpty( userPw )'>
+					USER_PW = #{userPw, jdbcType=VARCHAR},
+			    </if>
+				<if test='@org.apache.commons.lang3.StringUtils@isNotEmpty( userIntro )'>
+					USER_INTRO = #{userIntro, jdbcType=VARCHAR},
+				</if>
+				<if test='!("").equals(failCnt) and failCnt!=null'>
+					FAIL_CNT = #{failCnt, jdbcType=NUMERIC},
+				</if>
+				<if test='!("").equals(lockFlag) and lockFlag!=null'>
+					LOCK_FLAG = #{lockFlag, jdbcType=VARCHAR},
+				</if>
+		    </set>
+		   <where>
+		     AND USER_ID = #{userId, jdbcType=VARCHAR}
+		   </where>
+	</update>
+
+	<delete id="deleteUserInfo" parameterType="UserInfoVO" >
+		  DELETE FROM TBL_USER
+		   <where>
+		     AND USER_ID = #{userId, jdbcType=VARCHAR}
+		   </where>
+	</delete>
+</mapper>
