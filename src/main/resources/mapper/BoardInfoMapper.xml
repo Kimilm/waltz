@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.mybrainfficial.waltzProject.boardInfo">	
+	<select id="selectListBoardInfo" parameterType="BoardInfoVO" resultType="BoardInfoVO">
+		SELECT *
+		FROM waltz.TB_BOARD_INFO AS A
+		WHERE A.BRD_CD = #{brdCd, jdbcType=VARCHAR}
+		ORDER BY POST_ID DESC
+	</select>
+
+	<select id="selectListPost" parameterType="BoardInfoVO" resultType="PostVO">
+		SELECT A.*, B.*
+		FROM waltz.TB_BOARD_INFO AS A
+		LEFT JOIN waltz.TB_USER_INFO AS B
+		ON A.WRTR_ID = B.USER_ID
+		WHERE A.BRD_CD = #{brdCd, jdbcType=VARCHAR}
+		AND A.DEL_YN = "N"
+	</select>
+</mapper>
