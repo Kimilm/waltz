@@ -16,6 +16,10 @@ public class MenuInfoDAO {
 	
 	private static final String NS = MenuInfoDAO.class.getPackage().getName() + ".";
 	
+	public List<MenuInfoVO> selectMenuInfoAll() throws DataAccessException {
+		return this.sqlsession.selectList(NS + "selectMenuInfoAll"); 
+	}
+	
 	public List<MenuInfoVO> selectListMenuInfo(final String menuTp) throws DataAccessException {
 		return this.sqlsession.selectList(NS + "selectListMenuInfo", menuTp);
 	}
