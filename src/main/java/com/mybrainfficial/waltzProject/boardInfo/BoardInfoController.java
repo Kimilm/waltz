@@ -15,7 +15,7 @@ import com.mybrainfficial.waltzProject.menuInfo.MenuInfoService;
 import com.mybrainfficial.waltzProject.menuInfo.MenuInfoVO;
 
 @Controller
-@RequestMapping("/bbs")
+@RequestMapping
 public class BoardInfoController {
 	
 	@Autowired
@@ -35,22 +35,6 @@ public class BoardInfoController {
 		return boardInfoService.selectListBoardInfo(vo);
 	}
 	
-	/* 게시판 */
-	@RequestMapping("/{menuCd}")
-	public String getBoard (@PathVariable("menuCd") String menuCd, Model model) {
-		MenuInfoVO menuVo = null;;
-		
-		for (MenuInfoVO vo : MenuInfoService.getMenuInfo()) {
-			if (menuCd.equals(vo.getMenuCd())) {
-				menuVo = vo;
-			}
-		}
-		
-		model.addAttribute("menuVo", menuVo);
-		
-		return "board";
-	}
-	
 	/* 게시글 */
 	@RequestMapping(value = "/getPostList/{menuCd}")
 	@ResponseBody
@@ -63,5 +47,13 @@ public class BoardInfoController {
 		return boardInfoService.selectListBoardInfo(vo);
 	}
 	
-	
+	@RequestMapping(value = "/post/{postId}")
+	public String getPost(@PathVariable("postId") String postId, Model model) {
+		BoardInfoVO vo = new BoardInfoVO();
+		vo.setPostId(Integer.parseInt(postId));
+		
+		model.addAttribute(boardInfoService.selectBoardinfo(vo));
+		
+		return "post";
+	}
 }

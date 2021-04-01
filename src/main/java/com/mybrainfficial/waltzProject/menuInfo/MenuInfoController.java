@@ -7,6 +7,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.mybrainfficial.waltzProject.userInfo.UserInfoVO;
@@ -30,5 +32,22 @@ public class MenuInfoController {
 		}
 		
 		return "redirect:/user/main";
+	}
+	
+	/* 게시판 */
+	@RequestMapping("/bbs/{menuCd}")
+	public String getBoard (@PathVariable("menuCd") String menuCd, Model model) {
+		MenuInfoVO menuVo = null;;
+		
+		for (MenuInfoVO vo : MenuInfoService.getMenuInfo()) {
+			if (menuCd.equals(vo.getMenuCd())) {
+				menuVo = vo;
+			}
+		}
+		
+		/* print menuNm */
+		model.addAttribute("menuVo", menuVo);
+		
+		return "board";
 	}
 }

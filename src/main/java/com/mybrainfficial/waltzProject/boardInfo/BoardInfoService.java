@@ -11,6 +11,10 @@ public class BoardInfoService {
 	@Autowired
 	private BoardInfoDAO boardInfoDao;
 	
+	public BoardInfoVO selectBoardinfo(BoardInfoVO vo) {
+		return boardInfoDao.selectBoardInfo(vo);
+	}
+	
 	public List<BoardInfoVO> selectListBoardInfo(BoardInfoVO vo) {
 		return boardInfoDao.selectListBoardInfo(vo);
 	}

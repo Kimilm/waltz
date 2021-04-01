@@ -39,7 +39,7 @@
 						<div class="col-md-12">
 							<div class="card">
 								<div class="card-body">
-									<table class="table table-hover table-condensed">
+									<table class="table table-hover table-sm">
 										<thead>
 											<tr class="d-flex text-center">
 												<th class="col-1">번호</th>
@@ -116,7 +116,7 @@
 			console.log(menuCd);
 			
 			$.ajax({
-				url : `/bbs/getPostList/${menuCd}`,
+				url : `/getPostList/${menuCd}`,
 				type : "GET",
 				dataType : "json",
 				success : function(response) {
@@ -129,7 +129,9 @@
 						$('tbody').append(
 							'<tr class="d-flex">' + 
 								'<td class="col-1 text-center">' + value.postId + '</td>' + 
-								'<td class="col-8">' + value.postSubject + '</td>' +
+								'<td class="col-8">' + 
+									'<a href="/post/' + value.postId + '">' + value.postSubject + '</a>' +
+								'</td>' +
 								'<td class="col-1 text-center">' + value.wrtrId + '</td>' +
 								'<td class="col-1 text-center">' + value.hitCnt + '</td>' +
 								'<td class="col-1 text-center">' + date.getMonth() + '/' + date.getDate() + '</td>' +
@@ -139,7 +141,6 @@
 				}
 			});
 		}
-
 	</script>
 </body>
 </html>

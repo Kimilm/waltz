@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 
-<mapper namespace="com.mybrainfficial.waltzProject.boardInfo">	
+<mapper namespace="com.mybrainfficial.waltzProject.boardInfo">
+	<select id="selectBoardInfo" parameterType="BoardInfoVO" resultType="BoardInfoVO">
+		SELECT *
+		FROM waltz.TB_BOARD_INFO AS A
+		WHERE A.POST_ID = #{postId, jdbcType=INTEGER}
+	</select>
+	
 	<select id="selectListBoardInfo" parameterType="BoardInfoVO" resultType="BoardInfoVO">
 		SELECT *
 		FROM waltz.TB_BOARD_INFO AS A
