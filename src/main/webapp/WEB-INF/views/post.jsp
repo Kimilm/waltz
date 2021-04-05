@@ -32,7 +32,48 @@
 						<div class="col-md-12">
 							<div class="card">
 								<div class="card-body">
-									someText
+									<!-- title -->
+									<div>
+										<h5 class="px-2">${post.postSubject}</h5>
+									</div>
+									<!-- contents -->
+									<div>
+										<div class="border-top border-bottom">
+											<div class="d-flex justify-content-between px-2">
+												<div>${post.wrtrId}</div>
+												<div>${post.hitCnt} ${post.wrtrDt}</div>
+											</div>
+										</div>
+										<div class="p-2">${post.postConts}</div>
+									</div>
+									<!-- comment -->
+									<div>
+										<div class="border-top border-bottom px-2">
+											comment
+										</div>
+										<div class="px-2">
+											<div class="border mt-2">
+												<div class="border-bottom px-2 bg-gray-200">commentTitle</div>
+												<div class="px-2">
+													commentContents
+												</div>
+											</div>
+											
+											<div class="border mt-2">
+												<div class="border-bottom px-2 bg-gray-200">commentTitle</div>
+												<div class="px-2">
+													commentContents
+												</div>
+											</div>
+											
+											<div class="border mt-2">
+												<div class="border-bottom px-2 bg-gray-200">commentTitle</div>
+												<div class="px-2">
+													commentContents
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>

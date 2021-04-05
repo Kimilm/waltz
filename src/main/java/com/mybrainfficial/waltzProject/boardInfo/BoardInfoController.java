@@ -49,11 +49,16 @@ public class BoardInfoController {
 	
 	@RequestMapping(value = "/post/{postId}")
 	public String getPost(@PathVariable("postId") String postId, Model model) {
-		BoardInfoVO vo = new BoardInfoVO();
-		vo.setPostId(Integer.parseInt(postId));
+		BoardInfoVO post = new BoardInfoVO();
+		post.setPostId(Integer.parseInt(postId));
+		post = boardInfoService.selectBoardinfo(post);
 		
-		model.addAttribute(boardInfoService.selectBoardinfo(vo));
+		MenuInfoVO menu = new MenuInfoVO();
+		menu = MenuInfoService.getMenuInfo().get(post.getBrdCd());
 		
-		return "post";
+		model.addAttribute("post", post);
+		model.addAttribute("menu", menu);
+		
+		return "board";
 	}
 }

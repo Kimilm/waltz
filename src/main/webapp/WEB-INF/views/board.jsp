@@ -26,19 +26,64 @@
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
+					<c:if test="${post ne null}">
+						<!-- Content Row -->
+						<div class="row">
+							<div class="col-md-12 mb-4">
+								<div class="card">
+									<div class="card-body">
+										<!-- title -->
+										<div>
+											<h5 class="px-2">${post.postSubject}</h5>
+										</div>
+										<!-- contents -->
+										<div>
+											<div class="border-top border-bottom">
+												<div class="d-flex justify-content-between px-2">
+													<div>${post.wrtrId}</div>
+													<div>${post.hitCnt}${post.wrtrDt}</div>
+												</div>
+											</div>
+											<div class="p-2">${post.postConts}</div>
+										</div>
+										<!-- comment -->
+										<div>
+											<div class="border-top border-bottom px-2">comment</div>
+											<div class="px-2">
+												<div class="border mt-2">
+													<div class="border-bottom px-2 bg-gray-200">commentTitle</div>
+													<div class="px-2">commentContents</div>
+												</div>
 
-					<!-- Page Heading -->
-					<div class="d-sm-flex align-items-center justify-content-between mb-4">
-						<p class="h3 mb-0 text-gray-800">${menuVo.menuNm}</p>
-						<input id="menuCd" type="hidden" value="${menuVo.menuCd}" />
-					</div>
+												<div class="border mt-2">
+													<div class="border-bottom px-2 bg-gray-200">commentTitle</div>
+													<div class="px-2">commentContents</div>
+												</div>
+
+												<div class="border mt-2">
+													<div class="border-bottom px-2 bg-gray-200">commentTitle</div>
+													<div class="px-2">commentContents</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- End Content Row -->
+					</c:if>
 
 					<!-- Content Row -->
 					<div class="row">
-
-						<div class="col-md-12">
+						<div class="col-md-12 mb-4">
 							<div class="card">
 								<div class="card-body">
+								<!-- Page Heading -->
+									<div class="d-sm-flex align-items-center justify-content-between mb-4">
+										<p class="h3 mb-0 text-gray-800">${menu.menuNm}</p>
+										<input id="menuCd" type="hidden" value="${menu.menuCd}" />
+									</div>
+									
 									<table class="table table-hover table-sm">
 										<thead>
 											<tr class="d-flex text-center">
@@ -62,33 +107,20 @@
 
 									<div>
 										<ul class="pagination pagination-sm justify-content-center mb-0">
-											<li class="page-item">
-												<a class="page-link" href>&laquo;</a>
-											</li>
-											<li class="page-item">
-												<a class="page-link" href>1</a>
-											</li>
-											<li class="page-item">
-												<a class="page-link" href>2</a>
-											</li>
-											<li class="page-item">
-												<a class="page-link" href>3</a>
-											</li>
-											<li class="page-item">
-												<a class="page-link" href>4</a>
-											</li>
-											<li class="page-item">
-												<a class="page-link" href>5</a>
-											</li>
-											<li class="page-item">
-												<a class="page-link" href>&raquo;</a>
-											</li>
+											<li class="page-item"><a class="page-link" href>&laquo;</a></li>
+											<li class="page-item"><a class="page-link" href>1</a></li>
+											<li class="page-item"><a class="page-link" href>2</a></li>
+											<li class="page-item"><a class="page-link" href>3</a></li>
+											<li class="page-item"><a class="page-link" href>4</a></li>
+											<li class="page-item"><a class="page-link" href>5</a></li>
+											<li class="page-item"><a class="page-link" href>&raquo;</a></li>
 										</ul>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
+					<!-- End Content Row -->
 				</div>
 				<!-- /.container-fluid -->
 			</div>
@@ -116,7 +148,8 @@
 			console.log(menuCd);
 			
 			$.ajax({
-				url : `/getPostList/${menuCd}`,
+				/* url : `/getPostList/${menuCd}`, */
+				url : "/getPostList/" + menuCd,
 				type : "GET",
 				dataType : "json",
 				success : function(response) {

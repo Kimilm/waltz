@@ -37,16 +37,10 @@ public class MenuInfoController {
 	/* 게시판 */
 	@RequestMapping("/bbs/{menuCd}")
 	public String getBoard (@PathVariable("menuCd") String menuCd, Model model) {
-		MenuInfoVO menuVo = null;;
-		
-		for (MenuInfoVO vo : MenuInfoService.getMenuInfo()) {
-			if (menuCd.equals(vo.getMenuCd())) {
-				menuVo = vo;
-			}
-		}
+		MenuInfoVO menu = MenuInfoService.getMenuInfo().get(menuCd);
 		
 		/* print menuNm */
-		model.addAttribute("menuVo", menuVo);
+		model.addAttribute("menu", menu);
 		
 		return "board";
 	}

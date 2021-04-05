@@ -1,6 +1,8 @@
 package com.mybrainfficial.waltzProject.menuInfo;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -19,15 +21,20 @@ public class MenuInfoService {
 	@Resource
 	private MenuInfoDAO menuInfoDAO;
 	
-	private static List<MenuInfoVO> menuInfo;
+	private static Map<String, MenuInfoVO> menuInfo = new HashMap<>();
 	
 	@PostConstruct
 	public void setMenuInfo() { 
-		MenuInfoService.menuInfo = menuInfoDAO.selectMenuInfoAll();
+		List<MenuInfoVO> menuList = menuInfoDAO.selectMenuInfoAll();
+		
+		for(MenuInfoVO vo : menuList) {
+			MenuInfoService.menuInfo.put(vo.getMenuCd(), vo);
+		}
+		
 		logger.info("======================== init menuInfo in memory ================");
 	}
 	
-	public static List<MenuInfoVO> getMenuInfo() { return menuInfo; }
+	public static Map<String, MenuInfoVO> getMenuInfo() { return menuInfo; }
 	
 	public List<MenuInfoVO> selectListMenuInfo(final String menuTp) throws DataAccessException {
 		return menuInfoDAO.selectListMenuInfo(menuTp);
