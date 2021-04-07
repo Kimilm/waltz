@@ -1,95 +1,177 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%--main_header.jsp--%>
-<%-- Main Header --%>
-<style>
-    .navbar-nav > li > a {padding-top : 15px !important; padding-bottom : 15px !important; padding-right : 5px !important;}
-</style>
-<header class="main-header">
+<!-- Topbar -->
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-    <%-- Logo --%>
-    <a href="/user/home" class="logo">
-        <%-- mini logo for sidebar mini 50x50 pixels --%>
-        <span class="logo-mini"><b>M</b>B</span>
-        <%-- logo for regular state and mobile devices --%>
-        <span class="logo-lg"><b>MVC</b> Board</span>
-    </a>
+	<!-- Sidebar Toggle (Topbar) -->
+	<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+		<i class="fa fa-bars"></i>
+	</button>
 
-    <%-- Header Navbar --%>
-    <nav class="navbar navbar-static-top" role="navigation">
-        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-            <span class="sr-only">Toggle navigation</span>
-        </a>
-        <div class="navbar-custom-menu">
-            <ul class="nav navbar-nav">
-                <c:if test="${not empty login}">
-                    <li class="dropdown user user-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="/resources/template/dist/img/user1-128x128.jpg" class="user-image" alt="User Image">
-                            <span class="hidden-xs">${login.userNm}</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="user-header">
-                                <img src="/resources/template/dist/img/user1-128x128.jpg" class="img-circle" alt="User Image">
-                                <p>${login.userNm}
-                                    <small>
-                                       가입일자 : ${login.userJoinDate}
-                                    </small>
-                                </p>
-                            </li>
-                            <li class="user-body">
-                                <div class="row">
-                                    <div class="col-xs-4 text-center">
-                                        <a href="#">게시글</a>
-                                    </div>
-                                    <div class="col-xs-4 text-center">
-                                        <a href="#">추천글</a>
-                                    </div>
-                                    <div class="col-xs-4 text-center">
-                                        <a href="#">북마크</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="user-footer">
-                                <div class="pull-left">
-                                    <a href="/user/info" class="btn btn-default btn-flat"><i
-                                            class="fa fa-info-circle"></i><b> 내 프로필</b></a>
-                                </div>
-                                <div class="pull-right">
-                                    <a href="/user/logout" class="btn btn-default btn-flat"><i
-                                            class="glyphicon glyphicon-log-out"></i><b> 로그아웃</b></a>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                </c:if>
-                <c:if test="${empty login}">
-                    <li class="dropdown user user-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="${path}/user/default-user.png" class="user-image" alt="User Image">
-                            <span class="hidden-xs">회원가입 또는 로그인</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="user-header">
-                                <img src="/dist/img/default-user.png" class="img-circle" alt="User Image">
-                                <p>
-                                    <b>회원가입 또는 로그인해주세요</b>
-                                    <small></small>
-                                </p>
-                            </li>
-                            <li class="user-footer">
-                                <div class="pull-left">
-                                    <a href="${path}/user/register" class="btn btn-default btn-flat"><i
-                                            class="fa fa-user-plus"></i><b> 회원가입</b></a>
-                                </div>
-                                <div class="pull-right">
-                                    <a href="${path}/user/login" class="btn btn-default btn-flat"><i
-                                            class="glyphicon glyphicon-log-in"></i><b> 로그인</b></a>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                </c:if>
-            </ul>
-        </div>
-    </nav>
-</header>
+	<!-- Topbar Search -->
+	<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+		<div class="input-group">
+			<input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+			<div class="input-group-append">
+				<button class="btn btn-primary" type="button">
+					<i class="fas fa-search fa-sm"></i>
+				</button>
+			</div>
+		</div>
+	</form>
+
+	<!-- Topbar Navbar -->
+	<ul class="navbar-nav ml-auto">
+
+		<!-- Nav Item - Search Dropdown (Visible Only XS) -->
+		<li class="nav-item dropdown no-arrow d-sm-none">
+			<a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<i class="fas fa-search fa-fw"></i>
+			</a>
+			<!-- Dropdown - Messages -->
+			<div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+				<form class="form-inline mr-auto w-100 navbar-search">
+					<div class="input-group">
+						<input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+						<div class="input-group-append">
+							<button class="btn btn-primary" type="button">
+								<i class="fas fa-search fa-sm"></i>
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</li>
+
+		<!-- Nav Item - Alerts -->
+		<li class="nav-item dropdown no-arrow mx-1">
+			<a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<i class="fas fa-bell fa-fw"></i>
+				<!-- Counter - Alerts -->
+				<span class="badge badge-danger badge-counter">3+</span>
+			</a>
+			<!-- Dropdown - Alerts -->
+			<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+				<h6 class="dropdown-header">Alerts Center</h6>
+				<a class="dropdown-item d-flex align-items-center" href="#">
+					<div class="mr-3">
+						<div class="icon-circle bg-primary">
+							<i class="fas fa-file-alt text-white"></i>
+						</div>
+					</div>
+					<div>
+						<div class="small text-gray-500">December 12, 2019</div>
+						<span class="font-weight-bold">A new monthly report is ready to download!</span>
+					</div>
+				</a>
+				<a class="dropdown-item d-flex align-items-center" href="#">
+					<div class="mr-3">
+						<div class="icon-circle bg-success">
+							<i class="fas fa-donate text-white"></i>
+						</div>
+					</div>
+					<div>
+						<div class="small text-gray-500">December 7, 2019</div>
+						$290.29 has been deposited into your account!
+					</div>
+				</a>
+				<a class="dropdown-item d-flex align-items-center" href="#">
+					<div class="mr-3">
+						<div class="icon-circle bg-warning">
+							<i class="fas fa-exclamation-triangle text-white"></i>
+						</div>
+					</div>
+					<div>
+						<div class="small text-gray-500">December 2, 2019</div>
+						Spending Alert: We've noticed unusually high spending for your account.
+					</div>
+				</a>
+				<a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+			</div>
+		</li>
+
+		<!-- Nav Item - Messages -->
+		<li class="nav-item dropdown no-arrow mx-1">
+			<a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<i class="fas fa-envelope fa-fw"></i>
+				<!-- Counter - Messages -->
+				<span class="badge badge-danger badge-counter">7</span>
+			</a>
+			<!-- Dropdown - Messages -->
+			<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
+				<h6 class="dropdown-header">Message Center</h6>
+				<a class="dropdown-item d-flex align-items-center" href="#">
+					<div class="dropdown-list-image mr-3">
+						<img class="rounded-circle" src="/resources/img/undraw_profile_1.svg" alt="">
+						<div class="status-indicator bg-success"></div>
+					</div>
+					<div class="font-weight-bold">
+						<div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
+						<div class="small text-gray-500">Emily Fowler � 58m</div>
+					</div>
+				</a>
+				<a class="dropdown-item d-flex align-items-center" href="#">
+					<div class="dropdown-list-image mr-3">
+						<img class="rounded-circle" src="/resources/img/undraw_profile_2.svg" alt="">
+						<div class="status-indicator"></div>
+					</div>
+					<div>
+						<div class="text-truncate">I have the photos that you ordered last month, how would you like them sent to you?</div>
+						<div class="small text-gray-500">Jae Chun � 1d</div>
+					</div>
+				</a>
+				<a class="dropdown-item d-flex align-items-center" href="#">
+					<div class="dropdown-list-image mr-3">
+						<img class="rounded-circle" src="/resources/img/undraw_profile_3.svg" alt="">
+						<div class="status-indicator bg-warning"></div>
+					</div>
+					<div>
+						<div class="text-truncate">Last month's report looks great, I am very happy with the progress so far, keep up the good work!</div>
+						<div class="small text-gray-500">Morgan Alvarez � 2d</div>
+					</div>
+				</a>
+				<a class="dropdown-item d-flex align-items-center" href="#">
+					<div class="dropdown-list-image mr-3">
+						<img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="">
+						<div class="status-indicator bg-success"></div>
+					</div>
+					<div>
+						<div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</div>
+						<div class="small text-gray-500">Chicken the Dog � 2w</div>
+					</div>
+				</a>
+				<a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+			</div>
+		</li>
+
+		<div class="topbar-divider d-none d-sm-block"></div>
+
+		<!-- Nav Item - User Information -->
+		<li class="nav-item dropdown no-arrow">
+			<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<span class="mr-2 d-none d-lg-inline text-gray-600 small">${login.userNm}</span>
+				<img class="img-profile rounded-circle" src="/resources/img/undraw_profile.svg">
+			</a>
+			<!-- Dropdown - User Information -->
+			<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+				<a class="dropdown-item" href="#">
+					<i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profile
+				</a>
+				<a class="dropdown-item" href="#">
+					<i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> Settings
+				</a>
+				<a class="dropdown-item" href="#">
+					<i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> Activity Log
+				</a>
+				<div class="dropdown-divider"></div>
+				<!-- <a class="dropdown-item" href="/" data-toggle="modal" data-target="#logoutModal">
+					<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout
+				</a> -->
+				<a class="dropdown-item" href="/user/login">
+					<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout
+				</a>
+			</div>
+		</li>
+
+	</ul>
+
+</nav>
+<!-- End of Topbar -->

@@ -40,7 +40,7 @@ public class HomeController {
 		return "/user/login";
 	}
 
-	@RequestMapping(value = "/user/index", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/main", method = RequestMethod.GET)
 	public String home(Locale locale, HttpSession session, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		logger.debug("debug test");
@@ -53,8 +53,10 @@ public class HomeController {
 
 		model.addAttribute("serverTime", formattedDate);
 		model.addAttribute("login", session.getAttribute("login"));
+		model.addAttribute("menuMt", session.getAttribute("menuMt"));
+		model.addAttribute("menuDt", session.getAttribute("menuDt"));
 
-        return "/index";
+        return "main";
 	}
 
 

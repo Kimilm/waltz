@@ -1,113 +1,54 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<aside class="main-sidebar">
+<!-- Sidebar -->
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
+	<!-- Sidebar - Brand -->
+	<a class="sidebar-brand d-flex align-items-center justify-content-center" href="/user/main">
+		<div class="sidebar-brand-text mx-3">Waltz</div>
+	</a>
 
-        <!-- Sidebar user panel (optional) -->
-        <div class="user-panel">
-            <c:if test="${empty login}">
-                <div class="pull-left image">
-                    <img src="${path}/user/default-user.png" class="img-circle" alt="User Image">
-                </div>
-                <div class="pull-left info">
-                    <p>Guest</p>
-                        <%-- Status --%>
-                    <a href="#"><i class="fa fa-circle text-danger"></i> OFFLINE</a>
-                </div>
-            </c:if>
-            <c:if test="${not empty login}">
-                <div class="pull-left image">
-                    <img src="#" class="img-circle" alt="User Image">
-                </div>
-                <div class="pull-left info">
-                    <p>${login.userNm}</p>
-                        <%-- Status --%>
-                    <a href="#"><i class="fa fa-circle text-success"></i> ONLINE</a>
-                </div>
-            </c:if>
-        </div>
+	<!-- Divider -->
+	<hr class="sidebar-divider my-0">
 
-        <!-- search form (Optional) -->
-        <form action="#" method="get" class="sidebar-form">
-            <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search...">
-                <span class="input-group-btn">
-                    <button type="submit" name="search" id="search-btn" class="btn btn-flat">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </span>
-            </div>
-        </form>
-        <!-- /.search form -->
+	<!-- Nav Item - Dashboard -->
+	<li class="nav-item active">
+		<a class="nav-link" href="/">
+			<i class="fas fa-fw fa-tachometer-alt"></i>
+			<span>Dashboard</span>
+		</a>
+	</li>
 
-        <!-- Sidebar Menu -->
-        <ul class="sidebar-menu" data-widget="tree">
-            <li class="header">테스트 예제</li>
-            <li class="treeview">
-                <a href="#"><i class="fa fa-folder"></i> <span>예제</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="${path}/reply/test"><i class="fa fa-comment"></i> 댓글 </a></li>
-                    <li><a href="${path}/file/form/uploadPage"><i class="fa fa-file"></i> 파일 업로드(Form)</a></li>
-                    <li><a href="${path}/file/ajax/uploadPage"><i class="fa fa-file"></i> 파일 업로드(Ajax Drop)</a></li>
-                    <li><a href="${path}/interceptor/doA"><i class="fa fa-mail-forward"></i> 인터셉터</a></li>
-                </ul>
-            </li>
-            <li class="header">게시판</li>
-            <!-- 1. 시스템관리 -->
-            <li class="treeview">
-                <a href="#"><i class="fa fa-edit"></i> <span>시스템관리</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="/system/member/memberList"><i class="fa fa-pencil"></i> 사용자관리</a></li>
-                    <li><a href="/system/menu/menuList"><i class="fa fa-list"></i> 메뉴관리</a></li>
-                </ul>
-            </li>
+	<!-- Divider -->
+	<hr class="sidebar-divider">
 
+	<!-- Heading -->
+	<div class="sidebar-heading">menu</div>
 
-            <li class="treeview">
-                <a href="#"><i class="fa fa-edit"></i> <span>게시판(기본)</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="${path}/article/write"><i class="fa fa-pencil"></i> 게시글 쓰기</a></li>
-                    <li><a href="${path}/article/list"><i class="fa fa-list"></i> 게시글 목록</a></li>
-                </ul>
-            </li>
-            <li class="treeview">
-                <a href="#"><i class="fa fa-edit"></i> <span>게시판(페이징)</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="${path}/article/paging/write"><i class="fa fa-pencil"></i> 게시글 쓰기</a></li>
-                    <li><a href="${path}/article/paging/list"><i class="fa fa-list"></i> 게시글 목록</a></li>
-                </ul>
-            </li>
-            <li class="treeview">
-                <a href="#"><i class="fa fa-edit"></i> <span>게시판(페이징+검색)</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="${path}/article/paging/search/write"><i class="fa fa-pencil"></i> 게시글 쓰기</a></li>
-                    <li><a href="${path}/article/paging/search/list"><i class="fa fa-list"></i> 게시글 목록</a></li>
-                </ul>
-            </li>
+	<!-- menu -->
+	<c:forEach items="${sessionScope.menuMt}" var="mt">
+		<li class="nav-item">
+			<a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#${mt.menuCd}" aria-expanded="true" aria-controls="${mt.menuCd}">
+				<i class="fas fa-fw fa-list-alt"></i>
+				<span>${mt.menuNm}</span>
+			</a>
+			<div id="${mt.menuCd}" class="collapse" aria-labelledby="heading${mt.menuCd}" data-parent="#accordionSidebar">
+				<div class="bg-white py-2 collapse-inner rounded">
+					<c:forEach items="${sessionScope.menuDt}" var="dt">
+						<c:if test="${mt.menuCd eq dt.prntMenuCd}">
+							<a class="collapse-item" href="${dt.menuUrl}">${dt.menuNm}</a>
+						</c:if>
+					</c:forEach>
+				</div>
+			</div>
+		</li>
+	</c:forEach>
 
-        </ul>
-        <!-- /.sidebar-menu -->
-    </section>
-    <!-- /.sidebar -->
-</aside>
+	<!-- Divider -->
+	<hr class="sidebar-divider d-none d-md-block">
+
+	<!-- Sidebar Toggler (Sidebar) -->
+	<div class="text-center d-none d-md-inline">
+		<button class="rounded-circle border-0" id="sidebarToggle"></button>
+	</div>
+
+</ul>
+<!-- End of Sidebar -->

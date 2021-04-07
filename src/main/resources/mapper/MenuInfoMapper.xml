@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.mybrainfficial.waltzProject.menuInfo">
+	<select id="selectMenuInfoAll" resultType="MenuInfoVO">
+		SELECT * FROM waltz.TB_MENU_INFO
+	</select>
+	
+	<select id="selectListMenuInfo" parameterType="String" resultType="MenuInfoVO">
+		SELECT * FROM waltz.TB_MENU_INFO WHERE MENU_TP = #{menuTp, jdbcType=VARCHAR}
+	</select>
+
+	<select id="selectListMenuInfoByUserInfoM" parameterType="UserInfoVO" resultType="MenuInfoVO">
+		SELECT *
+		FROM waltz.TB_MENU_INFO
+		WHERE MENU_TP = "M"
+		AND MENU_CD IN (
+			SELECT MENU_CD
+			FROM waltz.TB_AUTH_MAPP_INFO
+			WHERE USER_GRP_CD = #{userGrpCd, jdbcType=VARCHAR}
+			AND SEL_YN = "Y"
+		) ORDER BY MENU_SORT_NO;
+	</select>
+	
+	<select id="selectListMenuInfoByUserInfoS" parameterType="UserInfoVO" resultType="MenuInfoVO">
+		SELECT *
+		FROM waltz.TB_MENU_INFO
+		WHERE MENU_TP = "S"
+		AND MENU_CD IN (
+			SELECT MENU_CD
+			FROM waltz.TB_AUTH_MAPP_INFO
+			WHERE USER_GRP_CD = #{userGrpCd, jdbcType=VARCHAR}
+			AND SEL_YN = "Y"
+		) ORDER BY MENU_SORT_NO;
+	</select>
+
+</mapper>

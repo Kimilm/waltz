@@ -29,7 +29,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
            httpSession.setAttribute("userId", request.getAttribute("userId"));
            httpSession.setAttribute("userNm", request.getAttribute("userNm"));
 
-           response.sendRedirect("/user/index");
+           response.sendRedirect("/setMenu");
        }
 
    }
@@ -42,6 +42,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
        if (httpSession.getAttribute(Login) != null) {
            logger.info("clear login data before");
            httpSession.removeAttribute(Login);
+           
+           httpSession.removeAttribute("menuMt");
+           httpSession.removeAttribute("menuDt");
        }
 
        return true;
