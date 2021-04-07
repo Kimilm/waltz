@@ -27,41 +27,59 @@
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
 
-					<!-- Page Heading -->
-					<div class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-					</div>
-
 					<!-- Content Row -->
 					<div class="row">
 
-						<!-- Earnings (Monthly) Card Example -->
-						<div class="col-md-4 mb-4">
+						<div class="col-md-6 mb-4">
 							<div class="card shadow">
 								<div class="card-header border-left-primary py-3">
 									<h6 class="m-0 font-weight-bold text-primary">공지사항</h6>
 								</div>
-								<div class="card-body">
+								<div id="ci_notice" class="card-body">
+									<ul class="list-unstyled mb-0"></ul>
 								</div>
 							</div>
 						</div>
+						
+						<div class="col-md-6 mb-4">
+							<div class="card shadow">
+								<div class="card-header border-left-primary py-3">
+									<h6 class="m-0 font-weight-bold text-primary">게임공지</h6>
+								</div>
+								<div id="gi_notice" class="card-body">
+									<ul class="list-unstyled mb-0"></ul>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					<!-- End Content Row -->
+					
+					<!-- Content Row -->
+					<div class="row">
 
-						<!-- Earnings (Monthly) Card Example -->
-						<div class="col-md-4 mb-4">
-							<div class="card border-left-success shadow h-100 py-2">
-								<div class="card-body">
-									<div class="row no-gutters align-items-center">
-										<div class="col mr-2">
-											<div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings (Annual)</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
-										</div>
-										<div class="col-auto">
-											<i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-										</div>
-									</div>
+						<div class="col-md-6 mb-4">
+							<div class="card shadow">
+								<div class="card-header border-left-primary py-3">
+									<h6 class="m-0 font-weight-bold text-primary">친선모집</h6>
+								</div>
+								<div id="ci_match" class="card-body">
+									<ul class="list-unstyled mb-0"></ul>
 								</div>
 							</div>
 						</div>
+						
+						<div class="col-md-6 mb-4">
+							<div class="card shadow">
+								<div class="card-header border-left-primary py-3">
+									<h6 class="m-0 font-weight-bold text-primary">자유게시판</h6>
+								</div>
+								<div id="cmnt_free" class="card-body">
+									<ul class="list-unstyled mb-0"></ul>
+								</div>
+							</div>
+						</div>
+						
 					</div>
 					<!-- End Content Row -->
 
@@ -83,5 +101,35 @@
 	<%--plugin_js.jsp--%>
 	<%@ include file="include/plugin_js.jsp"%>
 
+	<script>
+	$(document).ready(function() {
+		getPostList('ci_notice');
+		getPostList('gi_notice');
+		getPostList('ci_match');
+		getPostList('cmnt_free');
+	});
+	
+	function getPostList(menuCd) {
+		
+		$.ajax({
+			/* url : `/getPostList/${menuCd}`, */
+			url : "/getPostList/" + menuCd,
+			type : "GET",
+			dataType : "json",
+			success : function(response) {
+				/* log */
+				console.info(response);
+				$('#' + menuCd).children('ul').html('');
+				$.each(response, function(index, value) {
+					$('#' + menuCd).children('ul').append(
+						'<li>' +
+							'<a href="/post/' + value.postId + '">' + value.postSubject + '</a>' +
+						'</li>'
+					);
+				});
+			}
+		});
+	}
+	</script>
 </body>
 </html>
