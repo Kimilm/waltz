@@ -9,8 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.JsonObject;
+import com.mybrainfficial.waltzProject.ResultVO;
+import com.mybrainfficial.waltzProject.common.commonUtil.MessageUtil;
 import com.mybrainfficial.waltzProject.menuInfo.MenuInfoService;
 import com.mybrainfficial.waltzProject.menuInfo.MenuInfoVO;
 
@@ -53,12 +57,28 @@ public class BoardInfoController {
 		post.setPostId(Integer.parseInt(postId));
 		post = boardInfoService.selectBoardinfo(post);
 		
-		MenuInfoVO menu = new MenuInfoVO();
-		menu = MenuInfoService.getMenuInfo().get(post.getBrdCd());
 		
 		model.addAttribute("post", post);
-		model.addAttribute("menu", menu);
+		model.addAttribute("menuCd", post.getBrdCd());
 		
 		return "board";
+	}
+	
+	@RequestMapping(value="/bbs/{menuCd}/create")
+	public String newPost(@PathVariable("menuCd") String menuCd) {
+		return "newPostForm";
+	}
+	
+	/* Insert */
+	@RequestMapping(value = "/insertPost", method=RequestMethod.POST)
+	@ResponseBody
+	public ResultVO insertPost (BoardInfoVO vo) {
+		System.out.println(vo.getPostSubject());
+		
+		if(vo.getPostSubject() == null)
+			return MessageUtil.getFailCode();
+		
+		int result = boardInfoService.insertBoardInfo(vo);
+		return MessageUtil.getMessage(result);
 	}
 }

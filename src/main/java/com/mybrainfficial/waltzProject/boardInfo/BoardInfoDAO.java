@@ -25,4 +25,8 @@ public class BoardInfoDAO {
 	public List<PostVO> selectListPost(final BoardInfoVO vo) throws DataAccessException {
 		return this.sqlsession.selectList(NS + "selectListPost", vo);
 	}
+	
+	public int insertBoardInfo (final BoardInfoVO vo) throws DataAccessException {
+		return this.sqlsession.insert(NS + "insertBoardInfo", vo);
+	}
 }

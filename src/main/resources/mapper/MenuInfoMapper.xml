@@ -9,6 +9,10 @@
 	<select id="selectListMenuInfo" parameterType="String" resultType="MenuInfoVO">
 		SELECT * FROM waltz.TB_MENU_INFO WHERE MENU_TP = #{menuTp, jdbcType=VARCHAR}
 	</select>
+	
+	<select id="selectListAuthMappInfo" resultType="AuthMappInfoVO">
+		SELECT * FROM waltz.TB_AUTH_MAPP_INFO
+	</select>
 
 	<select id="selectListMenuInfoByUserInfoM" parameterType="UserInfoVO" resultType="MenuInfoVO">
 		SELECT *

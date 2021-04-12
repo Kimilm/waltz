@@ -23,4 +23,48 @@
 		WHERE A.BRD_CD = #{brdCd, jdbcType=VARCHAR}
 		AND A.DEL_YN = "N"
 	</select>
+	
+	<insert id="insertBoardInfo" parameterType="BoardInfoVO" >
+		INSERT INTO waltz.TB_BOARD_INFO(
+			POST_ID,
+			BRD_CD,
+			ORIG_POST_ID,
+			REPLY_YN,
+			POST_SUBJECT,
+			POST_CONTS,
+			WRTR_ID,
+			WRTR_DT,
+			POST_DATE_FROM,
+			POST_DATE_TO,
+			IMPTNC_YN,
+			ATTACH_YN,
+			ANS_YN,
+			DEL_YN,
+			HIT_CNT,
+			CRT_ID,
+			CRT_DT,
+			UPDT_ID,
+			UPDT_DT
+		) VALUES (
+		  	 #{postId, jdbcType=INTEGER},
+		  	 #{brdCd, jdbcType=VARCHAR},
+		  	 #{origPostId, jdbcType=INTEGER},
+		  	 #{replyYn, jdbcType=VARCHAR},
+		  	 #{postSubject, jdbcType=VARCHAR},
+		  	 #{postConts, jdbcType=VARCHAR},
+		  	 #{wrtrId, jdbcType=VARCHAR},
+		  	 SYSDATE(),
+		  	 #{postDateFrom, jdbcType=VARCHAR},
+		  	 #{postDateTo, jdbcType=VARCHAR},
+		  	 #{imptncYn, jdbcType=VARCHAR},
+		  	 #{attachYn, jdbcType=VARCHAR},
+		  	 #{ansYn, jdbcType=VARCHAR},
+		  	 'N',
+		  	 0,
+		  	 #{crtId, jdbcType=VARCHAR},
+		  	 SYSDATE(),
+		  	 null,
+		  	 null
+		  )
+	</insert>
 </mapper>

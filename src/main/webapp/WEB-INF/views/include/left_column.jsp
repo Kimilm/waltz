@@ -11,7 +11,7 @@
 
 	<!-- Nav Item - Dashboard -->
 	<li class="nav-item active">
-		<a class="nav-link" href="/">
+		<a class="nav-link" href="/user/main">
 			<i class="fas fa-fw fa-tachometer-alt"></i>
 			<span>Dashboard</span>
 		</a>
@@ -24,17 +24,17 @@
 	<div class="sidebar-heading">menu</div>
 
 	<!-- menu -->
-	<c:forEach items="${sessionScope.menuMt}" var="mt">
+	<c:forEach items="${menuMt}" var="mt">
 		<li class="nav-item">
-			<a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#${mt.menuCd}" aria-expanded="true" aria-controls="${mt.menuCd}">
+			<a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#${mt.value.menuCd}" aria-expanded="true" aria-controls="${mt.value.menuCd}">
 				<i class="fas fa-fw fa-list-alt"></i>
-				<span>${mt.menuNm}</span>
+				<span>${mt.value.menuNm}</span>
 			</a>
-			<div id="${mt.menuCd}" class="collapse" aria-labelledby="heading${mt.menuCd}" data-parent="#accordionSidebar">
+			<div id="${mt.value.menuCd}" class="collapse" aria-labelledby="heading${mt.value.menuCd}" data-parent="#accordionSidebar">
 				<div class="bg-white py-2 collapse-inner rounded">
-					<c:forEach items="${sessionScope.menuDt}" var="dt">
-						<c:if test="${mt.menuCd eq dt.prntMenuCd}">
-							<a class="collapse-item" href="${dt.menuUrl}">${dt.menuNm}</a>
+					<c:forEach items="${menuDt}" var="dt">
+						<c:if test="${mt.value.menuCd eq dt.value.prntMenuCd}">
+							<a class="collapse-item" href="${dt.value.menuUrl}">${dt.value.menuNm}</a>
 						</c:if>
 					</c:forEach>
 				</div>

@@ -31,4 +31,9 @@ public class MenuInfoDAO {
 	public List<MenuInfoVO> selectListMenuInfoByUserInfoS(final UserInfoVO vo) throws DataAccessException {
 		return this.sqlsession.selectList(NS + "selectListMenuInfoByUserInfoS", vo);
 	}
+	
+	/* AuthMappInfo */
+	public List<AuthMappInfoVO> selectListAuthMappInfo() throws DataAccessException {
+		return this.sqlsession.selectList(NS + "selectListAuthMappInfo");
+	}
 }

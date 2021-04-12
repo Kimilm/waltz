@@ -76,8 +76,8 @@
 									<!-- Page Heading -->
 									<div
 										class="d-sm-flex align-items-center justify-content-between mb-4">
-										<p class="h3 mb-0 text-gray-800">${menu.menuNm}</p>
-										<input id="menuCd" type="hidden" value="${menu.menuCd}" />
+										<p class="h3 mb-0 text-gray-800">${menuDt[menuCd].menuNm}</p>
+										<input id="menuCd" type="hidden" value="${menuCd}" />
 									</div>
 
 									<table class="table table-hover table-sm">
@@ -102,8 +102,7 @@
 									</table>
 
 									<div>
-										<ul
-											class="pagination pagination-sm justify-content-center mb-0">
+										<ul class="pagination pagination-sm justify-content-center mb-0">
 											<li class="page-item"><a class="page-link" href>&laquo;</a></li>
 											<li class="page-item"><a class="page-link" href>1</a></li>
 											<li class="page-item"><a class="page-link" href>2</a></li>
@@ -113,6 +112,14 @@
 											<li class="page-item"><a class="page-link" href>&raquo;</a></li>
 										</ul>
 									</div>
+									
+									
+									
+									<c:if test="${authMappInfo[login.userGrpCd].updtYn eq Y}">
+										<div class="float-right">
+											<a href="/bbs/${menuCd}/create" class="btn-sm btn-primary">글쓰기</a>
+										</div>
+									</c:if>
 								</div>
 							</div>
 						</div>
@@ -208,6 +215,25 @@
 					}
 				});
 			}
+		}
+		
+		function insertPost() {
+			$.ajax({
+				url : "/insertPost.json",
+				type : "POST",
+				dataType : "json",
+				data : {
+					col1 : $('#col1').val(),
+					col2 : $('#col2').val(),
+					col3 : $('#col3').val(),
+					col4 : $('#col4').val()
+				},
+				success : function(response) {
+					console.info(response);
+					alert(response.msg);
+					getTestTableList();
+				}
+			});
 		}
 	</script>
 </body>
