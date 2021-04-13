@@ -78,7 +78,7 @@ public class MenuInfoController {
 		Map<String, AuthMappInfoVO> authMappInfoMap = new HashMap<>();
 		
 		for(AuthMappInfoVO vo : authMappInfoList)
-			authMappInfoMap.put(vo.getMenuCd(), vo);
+			authMappInfoMap.put(vo.getMenuCd() + vo.getUserGrpCd(), vo);
 		
 		application.setAttribute("authMappInfo", authMappInfoMap);
 		logger.info("======================== init menuInfo in ApplicationScope ================");

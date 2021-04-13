@@ -113,14 +113,11 @@
 										</ul>
 									</div>
 									
-									
-									
-									<c:if test="${authMappInfo[login.userGrpCd].updtYn eq Y}">
+									<c:if test="${authMappInfo[menuCd += login.userGrpCd].updtYn eq 'Y'}">
 										<div class="float-right">
 											<a href="/bbs/${menuCd}/create" class="btn-sm btn-primary">글쓰기</a>
 										</div>
 									</c:if>
-								</div>
 							</div>
 						</div>
 					</div>
