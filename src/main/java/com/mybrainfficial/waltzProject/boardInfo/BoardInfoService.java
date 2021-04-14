@@ -27,4 +27,8 @@ public class BoardInfoService {
 	public int insertBoardInfo (final BoardInfoVO vo) throws DataAccessException {
 		return boardInfoDAO.insertBoardInfo(vo);
 	}
+	
+	public int updateBoardInfo (final BoardInfoVO vo) throws DataAccessException {
+		return boardInfoDAO.updateBoardInfo(vo);
+	}
 }

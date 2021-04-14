@@ -29,4 +29,8 @@ public class BoardInfoDAO {
 	public int insertBoardInfo (final BoardInfoVO vo) throws DataAccessException {
 		return this.sqlsession.insert(NS + "insertBoardInfo", vo);
 	}
+	
+	public int updateBoardInfo (final BoardInfoVO vo) throws DataAccessException {
+		return this.sqlsession.update(NS + "updateBoardInfo", vo);
+	}
 }

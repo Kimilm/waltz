@@ -32,16 +32,17 @@
 						<div class="col-md-12 mb-4">
 							<div class="card">
 								<div class="card-body">
-									<form method="post" action="/insertPost">
+									<form method="post" action="/updatePost">
 										<div class="form-group">
-											<input type="hidden" id="brdCd" name="brdCd" value="${menuCd}"/>
+											<input type="hidden" id="postId" name="postId" value="${post.postId}"/>
+											<input type="hidden" id="brdCd" name="brdCd" value="${post.brdCd}"/>
 											<label>title</label>
-											<input class="form-control" type="text" placeholder="title" id="postSubject" name="postSubject" />
+											<input class="form-control" type="text" placeholder="title" id="postSubject" name="postSubject" value="${post.postSubject}"/>
 											<p />
 											<label>contents</label>
-											<textarea class="form-control" type="text" placeholder="contents" id="postConts" name="postConts"></textarea>
+											<textarea class="form-control" type="text" placeholder="contents" id="postConts" name="postConts">${post.postConts}</textarea>
 											<p />
-											<input type="submit" class="btn-sm btn-primary shadow-none" value="작성완료">
+											<input type="submit" class="btn-sm btn-primary shadow-none" value="수정완료">
 											<input type="button" class="btn-sm shadow-none" onclick="history.back();" value="취소">
 										</div>
 									</form>

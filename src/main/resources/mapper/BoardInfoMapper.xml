@@ -48,8 +48,8 @@
 		) VALUES (
 		  	 #{postId, jdbcType=INTEGER},
 		  	 #{brdCd, jdbcType=VARCHAR},
-		  	 #{origPostId, jdbcType=INTEGER},
-		  	 #{replyYn, jdbcType=VARCHAR},
+		  	 null,
+		  	 'N',
 		  	 #{postSubject, jdbcType=VARCHAR},
 		  	 #{postConts, jdbcType=VARCHAR},
 		  	 #{wrtrId, jdbcType=VARCHAR},
@@ -67,4 +67,23 @@
 		  	 null
 		  )
 	</insert>
+	
+	<update id="updateBoardInfo" parameterType="BoardInfoVO" >
+		UPDATE waltz.TB_BOARD_INFO
+		SET
+			REPLY_YN = 'N',
+			POST_SUBJECT = #{postSubject, jdbcType=VARCHAR},
+			POST_CONTS = #{postConts, jdbcType=VARCHAR},
+			POST_DATE_FROM = null,
+			POST_DATE_TO = null,
+			IMPTNC_YN = #{imptncYn, jdbcType=VARCHAR},
+			ATTACH_YN = #{attachYn, jdbcType=VARCHAR},
+			ANS_YN = #{ansYn, jdbcType=VARCHAR},
+			DEL_YN = 'N',
+			HIT_CNT = 0,
+			UPDT_ID = #{updtId, jdbcType=VARCHAR},
+			UPDT_DT = SYSDATE()
+		WHERE
+		  	 POST_ID = #{postId, jdbcType=INTEGER}
+	</update>
 </mapper>

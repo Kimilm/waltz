@@ -2,6 +2,8 @@ package com.mybrainfficial.waltzProject.boardInfo;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import com.mybrainfficial.waltzProject.ResultVO;
 import com.mybrainfficial.waltzProject.common.commonUtil.MessageUtil;
 import com.mybrainfficial.waltzProject.menuInfo.MenuInfoService;
 import com.mybrainfficial.waltzProject.menuInfo.MenuInfoVO;
+import com.mybrainfficial.waltzProject.userInfo.UserInfoVO;
 
 @Controller
 @RequestMapping
@@ -64,21 +67,49 @@ public class BoardInfoController {
 		return "board";
 	}
 	
+	/* Insert */
 	@RequestMapping(value="/bbs/{menuCd}/create")
-	public String newPost(@PathVariable("menuCd") String menuCd) {
+	public String newPost(@PathVariable("menuCd") String menuCd, Model model) {
+		model.addAttribute("menuCd", menuCd);
 		return "newPostForm";
 	}
 	
-	/* Insert */
-	@RequestMapping(value = "/insertPost", method=RequestMethod.POST)
+	@RequestMapping(value = "/insertPost", method = RequestMethod.POST)
 	@ResponseBody
-	public ResultVO insertPost (BoardInfoVO vo) {
-		System.out.println(vo.getPostSubject());
-		
+	public ResultVO insertPost (BoardInfoVO vo, HttpSession session) {
 		if(vo.getPostSubject() == null)
 			return MessageUtil.getFailCode();
 		
+		UserInfoVO  user = (UserInfoVO) session.getAttribute("login");
+		vo.setWrtrId(user.getUserId());
+		vo.setCrtId(user.getUserId());
+		
 		int result = boardInfoService.insertBoardInfo(vo);
+		return MessageUtil.getMessage(result);
+	}
+	
+	/* update */
+	@RequestMapping(value="/updatePost/{postId}")
+	public String updatePost(@PathVariable("postId") String postId, Model model) {
+		BoardInfoVO vo = new BoardInfoVO();
+		vo.setPostId(Integer.parseInt(postId));
+		vo = boardInfoService.selectBoardinfo(vo);
+		
+		model.addAttribute("post", vo);
+		
+		return "updatePostForm";
+	}
+	
+	@RequestMapping(value = "/updatePost", method = RequestMethod.POST)
+	@ResponseBody
+	public ResultVO updatePost (BoardInfoVO vo, HttpSession session) {
+		if(vo.getPostSubject() == null)
+			return MessageUtil.getFailCode();
+		
+		UserInfoVO  user = (UserInfoVO) session.getAttribute("login");
+		vo.setUpdtId(user.getUserId());
+		
+		int result = boardInfoService.updateBoardInfo(vo);
 		return MessageUtil.getMessage(result);
 	}
 }

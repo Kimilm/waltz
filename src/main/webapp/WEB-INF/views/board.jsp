@@ -61,6 +61,13 @@
 												</div>
 											</div>
 										</div>
+										<c:if test="${post.wrtrId eq login.userId}">
+											<div class="d-flex float-right mt-3">
+												<a href="#" class="btn-sm btn-primary mr-1">답글</a>
+												<a href="/updatePost/${post.postId}" class="btn-sm btn-info mr-1" onclick="updatePost()">수정</a>
+												<a href="#" class="btn-sm btn-danger">삭제</a>
+											</div>
+										</c:if>
 									</div>
 								</div>
 							</div>
@@ -84,8 +91,8 @@
 										<thead>
 											<tr class="d-flex text-center">
 												<th class="col-1">번호</th>
-												<th class="col-8">제목</th>
-												<th class="col-1">작성자</th>
+												<th class="col-7">제목</th>
+												<th class="col-2">작성자</th>
 												<th class="col-1">조회수</th>
 												<th class="col-1">작성일</th>
 											</tr>
@@ -93,8 +100,8 @@
 										<tbody>
 											<tr class="d-flex">
 												<td class="col-1 text-center">col 1</td>
-												<td class="col-8">col 2</td>
-												<td class="col-1 text-center">col 3</td>
+												<td class="col-7">col 2</td>
+												<td class="col-2 text-center">col 3</td>
 												<td class="col-1 text-center">col 4</td>
 												<td class="col-1 text-center">col 5</td>
 											</tr>
@@ -165,12 +172,12 @@
 							+ '<td class="col-1 text-center">'
 								+ value.postId
 							+ '</td>'
-							+ '<td class="col-8">'
+							+ '<td class="col-7">'
 								+ '<a href="/post/' + value.postId + '">'
 									+ value.postSubject
 								+ '</a>'
 							+ '</td>'
-							+ '<td class="col-1 text-center">'
+							+ '<td class="col-2 text-center">'
 								+ value.wrtrId
 							+ '</td>'
 							+ '<td class="col-1 text-center">'
@@ -214,7 +221,7 @@
 			}
 		}
 		
-		function insertPost() {
+		/* function insertPost() {
 			$.ajax({
 				url : "/insertPost.json",
 				type : "POST",
@@ -231,7 +238,7 @@
 					getTestTableList();
 				}
 			});
-		}
+		} */
 	</script>
 </body>
 </html>
