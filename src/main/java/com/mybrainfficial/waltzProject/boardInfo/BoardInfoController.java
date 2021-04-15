@@ -112,4 +112,12 @@ public class BoardInfoController {
 		int result = boardInfoService.updateBoardInfo(vo);
 		return MessageUtil.getMessage(result);
 	}
+	
+	/* delete */
+	@RequestMapping(value = "/deletePost", method = RequestMethod.POST)
+	@ResponseBody
+	public ResultVO deletePost (BoardInfoVO vo, HttpSession session) {
+		boardInfoService.deleteBoardInfo(vo);
+		return MessageUtil.getSuccessCode();
+	}
 }

@@ -63,9 +63,9 @@
 										</div>
 										<c:if test="${post.wrtrId eq login.userId}">
 											<div class="d-flex float-right mt-3">
-												<a href="#" class="btn-sm btn-primary mr-1">답글</a>
-												<a href="/updatePost/${post.postId}" class="btn-sm btn-info mr-1" onclick="updatePost()">수정</a>
-												<a href="#" class="btn-sm btn-danger">삭제</a>
+												<a href="#" class="btn btn-sm btn-primary mr-1">답글</a>
+												<a href="/updatePost/${post.postId}" class="btn btn-sm btn-info mr-1" onclick="updatePost()">수정</a>
+												<button onclick="deletePost()" class="btn btn-sm btn-danger">삭제</button>
 											</div>
 										</c:if>
 									</div>
@@ -122,7 +122,7 @@
 									
 									<c:if test="${authMappInfo[menuCd += login.userGrpCd].updtYn eq 'Y'}">
 										<div class="float-right">
-											<a href="/bbs/${menuCd}/create" class="btn-sm btn-primary">글쓰기</a>
+											<a href="/bbs/${menuCd}/create" class="btn btn-sm btn-primary">글쓰기</a>
 										</div>
 									</c:if>
 							</div>
@@ -216,6 +216,27 @@
 								'</div>'
 							);
 						});
+					}
+				});
+			}
+		}
+		
+		function deletePost() {
+			const delYn = confirm("게시글을 삭제하시겠습니까?");
+			
+			if (delYn) {
+				$.ajax({
+					url : "/deletePost",
+					type : "POST",
+					dataType : "json",
+					data : {
+						postId : $('#postId').attr('value')
+					},
+					success : function(response) {
+						console.info(response);
+						alert(response.resultMsg);
+						/* getTestTableList(); */
+						history.back();
 					}
 				});
 			}

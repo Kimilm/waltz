@@ -31,4 +31,8 @@ public class BoardInfoService {
 	public int updateBoardInfo (final BoardInfoVO vo) throws DataAccessException {
 		return boardInfoDAO.updateBoardInfo(vo);
 	}
+	
+	public int deleteBoardInfo (final BoardInfoVO vo) throws DataAccessException {
+		return boardInfoDAO.deleteBoardInfo(vo);
+	}
 }

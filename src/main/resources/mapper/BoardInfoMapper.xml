@@ -6,15 +6,18 @@
 		SELECT *
 		FROM waltz.TB_BOARD_INFO AS A
 		WHERE A.POST_ID = #{postId, jdbcType=INTEGER}
+		AND A.DEL_YN = 'N'
 	</select>
 	
 	<select id="selectListBoardInfo" parameterType="BoardInfoVO" resultType="BoardInfoVO">
 		SELECT *
 		FROM waltz.TB_BOARD_INFO AS A
 		WHERE A.BRD_CD = #{brdCd, jdbcType=VARCHAR}
+		AND A.DEL_YN = 'N'
 		ORDER BY POST_ID DESC
 	</select>
 
+	<!-- not work -->
 	<select id="selectListPost" parameterType="BoardInfoVO" resultType="PostVO">
 		SELECT A.*, B.*
 		FROM waltz.TB_BOARD_INFO AS A
@@ -83,6 +86,15 @@
 			HIT_CNT = 0,
 			UPDT_ID = #{updtId, jdbcType=VARCHAR},
 			UPDT_DT = SYSDATE()
+		WHERE
+		  	 POST_ID = #{postId, jdbcType=INTEGER}
+	</update>
+	
+	<!-- logical delete -->
+	<update id="deleteBoardInfo" parameterType="BoardInfoVO" >
+		UPDATE waltz.TB_BOARD_INFO
+		SET
+			DEL_YN = 'Y'
 		WHERE
 		  	 POST_ID = #{postId, jdbcType=INTEGER}
 	</update>
