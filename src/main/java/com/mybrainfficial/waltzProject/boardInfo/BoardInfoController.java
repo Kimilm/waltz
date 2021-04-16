@@ -54,20 +54,25 @@ public class BoardInfoController {
 		return boardInfoService.selectListBoardInfo(vo);
 	}
 	
-	@RequestMapping(value = "/post/{postId}")
-	public String getPost(@PathVariable("postId") String postId, Model model) {
+	/* read */
+	@RequestMapping(value = "/getPost/{postId}", method = RequestMethod.GET)
+	@ResponseBody
+	public String getPost(@PathVariable("postId") String postId, TestBoardUtilVO util, Model model) {
 		BoardInfoVO post = new BoardInfoVO();
 		post.setPostId(Integer.parseInt(postId));
 		post = boardInfoService.selectBoardinfo(post);
 		
+		/* param test */
+		System.out.println(util.getSearch());
+		System.out.println(util.getPage());
 		
 		model.addAttribute("post", post);
 		model.addAttribute("menuCd", post.getBrdCd());
 		
-		return "board";
+		return "post";
 	}
 	
-	/* Insert */
+	/* create */
 	@RequestMapping(value="/bbs/{menuCd}/create")
 	public String newPost(@PathVariable("menuCd") String menuCd, Model model) {
 		model.addAttribute("menuCd", menuCd);

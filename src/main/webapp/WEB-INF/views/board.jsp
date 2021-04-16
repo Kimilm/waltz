@@ -26,10 +26,10 @@
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
-					<c:if test="${post ne null}">
+					<%-- <c:if test="${post ne null}"> --%>
 						<!-- Content Row -->
-						<div class="row">
-							<div class="col-md-12 mb-4">
+						<div class="row" id="postRow">
+							<%-- <div class="col-md-12 mb-4">
 								<div class="card">
 									<div class="card-body">
 										<!-- title -->
@@ -70,10 +70,10 @@
 										</c:if>
 									</div>
 								</div>
-							</div>
+							</div> --%>
 						</div>
 						<!-- End Content Row -->
-					</c:if>
+					<%-- </c:if> --%>
 
 					<!-- Content Row -->
 					<div class="row">
@@ -150,6 +150,16 @@
 			getPostList();
 			getReplyList();
 		});
+		
+		function get_query(){
+		    var url = document.location.href;
+		    var qs = url.substring(url.indexOf('?') + 1).split('&');
+		    for(var i = 0, result = {}; i < qs.length; i++){
+		        qs[i] = qs[i].split('=');
+		        result[qs[i][0]] = decodeURIComponent(qs[i][1]);
+		    }
+		    return result;
+		}
 
 		function getPostList() {
 			const menuCd = $('#menuCd').attr('value');
@@ -172,10 +182,13 @@
 							+ '<td class="col-1 text-center">'
 								+ value.postId
 							+ '</td>'
-							+ '<td class="col-7">'
+							/* + '<td class="col-7">'
 								+ '<a href="/post/' + value.postId + '">'
 									+ value.postSubject
 								+ '</a>'
+							+ '</td>' */
+							+ '<td class="col-7" onclick="getPost(this)">'
+								+ value.postSubject
 							+ '</td>'
 							+ '<td class="col-2 text-center">'
 								+ value.wrtrId
@@ -189,6 +202,32 @@
 							+ '</tr>'
 						);
 					});
+				}
+			});
+		}
+		
+		function getPost(element) {
+			const postId = $(element).prev().text();
+			const urlData = get_query();
+			
+			$.ajax({
+				url : "/getPost/" + postId,
+				data : urlData,
+				type : "GET",
+				dataType : "json",
+				complete : function() {
+					console.log('complete');
+				},
+				success : function(response) {
+					console.log('success');
+					$('#postRow').html('');
+					$('#postRow').append(response);
+				},
+				error : function(response) {
+					console.log('error');
+					console.log(response);
+					$('#postRow').html('');
+					$('#postRow').html(response.responseText);
 				}
 			});
 		}
