@@ -1,6 +1,7 @@
 package com.mybrainfficial.waltzProject.boardInfo;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,13 @@ public class BoardInfoDAO {
 		return this.sqlsession.selectOne(NS + "selectBoardInfo", vo);
 	}
 	
-	public List<BoardInfoVO> selectListBoardInfo(final BoardInfoVO vo) throws DataAccessException {
-		return this.sqlsession.selectList(NS + "selectListBoardInfo", vo);
+	/*
+	 * public List<BoardInfoVO> selectListBoardInfo(final BoardInfoVO vo) throws
+	 * DataAccessException { return this.sqlsession.selectList(NS +
+	 * "selectListBoardInfo", vo); }
+	 */
+	public List<BoardInfoVO> selectListBoardInfo(final Map<String, Object> queryMap) throws DataAccessException {
+		return this.sqlsession.selectList(NS + "selectListBoardInfo", queryMap);
 	}
 	
 	public List<PostVO> selectListPost(final BoardInfoVO vo) throws DataAccessException {

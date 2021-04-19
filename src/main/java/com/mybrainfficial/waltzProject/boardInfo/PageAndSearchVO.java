@@ -2,9 +2,9 @@ package com.mybrainfficial.waltzProject.boardInfo;
 
 import java.io.Serializable;
 
-public class TestBoardUtilVO implements Serializable {
+public class PageAndSearchVO implements Serializable {
 	private String search;
-	private int page;
+	private Integer page;
 	
 	public String getSearch() {
 		return search;
@@ -12,10 +12,10 @@ public class TestBoardUtilVO implements Serializable {
 	public void setSearch(String search) {
 		this.search = search;
 	}
-	public int getPage() {
+	public Integer getPage() {
 		return page;
 	}
-	public void setPage(int page) {
+	public void setPage(Integer page) {
 		this.page = page;
 	}
 }

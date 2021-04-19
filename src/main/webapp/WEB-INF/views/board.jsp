@@ -27,9 +27,9 @@
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
 					<%-- <c:if test="${post ne null}"> --%>
-						<!-- Content Row -->
-						<div class="row" id="postRow">
-							<%-- <div class="col-md-12 mb-4">
+					<!-- Content Row -->
+					<div class="row" id="postRow">
+						<%-- <div class="col-md-12 mb-4">
 								<div class="card">
 									<div class="card-body">
 										<!-- title -->
@@ -71,8 +71,8 @@
 									</div>
 								</div>
 							</div> --%>
-						</div>
-						<!-- End Content Row -->
+					</div>
+					<!-- End Content Row -->
 					<%-- </c:if> --%>
 
 					<!-- Content Row -->
@@ -109,7 +109,8 @@
 									</table>
 
 									<div>
-										<ul class="pagination pagination-sm justify-content-center mb-0">
+										<ul
+											class="pagination pagination-sm justify-content-center mb-0">
 											<li class="page-item"><a class="page-link" href>&laquo;</a></li>
 											<li class="page-item"><a class="page-link" href>1</a></li>
 											<li class="page-item"><a class="page-link" href>2</a></li>
@@ -119,39 +120,40 @@
 											<li class="page-item"><a class="page-link" href>&raquo;</a></li>
 										</ul>
 									</div>
-									
-									<c:if test="${authMappInfo[menuCd += login.userGrpCd].updtYn eq 'Y'}">
+
+									<c:if
+										test="${authMappInfo[menuCd += login.userGrpCd].updtYn eq 'Y'}">
 										<div class="float-right">
-											<a href="/bbs/${menuCd}/create" class="btn btn-sm btn-primary">글쓰기</a>
+											<a href="/bbs/${menuCd}/create"
+												class="btn btn-sm btn-primary">글쓰기</a>
 										</div>
 									</c:if>
+								</div>
 							</div>
 						</div>
+						<!-- End Content Row -->
 					</div>
-					<!-- End Content Row -->
+					<!-- /.container-fluid -->
 				</div>
-				<!-- /.container-fluid -->
-			</div>
-			<!-- End Main Content -->
+				<!-- End Main Content -->
 
-			<%-- Main Footer --%>
-			<%@ include file="include/main_footer.jsp"%>
+				<%-- Main Footer --%>
+				<%@ include file="include/main_footer.jsp"%>
+
+			</div>
+			<!-- End Content Wrapper -->
 
 		</div>
-		<!-- End Content Wrapper -->
+		<!-- End Page Wrapper -->
 
-	</div>
-	<!-- End Page Wrapper -->
-
-	<%--plugin_js.jsp--%>
-	<%@ include file="include/plugin_js.jsp"%>
-	<script>
+		<%--plugin_js.jsp--%>
+		<%@ include file="include/plugin_js.jsp"%>
+		<script>
 		$(document).ready(function() {
 			getPostList();
-			getReplyList();
 		});
 		
-		function get_query(){
+		/* function get_query(){
 		    var url = document.location.href;
 		    var qs = url.substring(url.indexOf('?') + 1).split('&');
 		    for(var i = 0, result = {}; i < qs.length; i++){
@@ -159,16 +161,24 @@
 		        result[qs[i][0]] = decodeURIComponent(qs[i][1]);
 		    }
 		    return result;
+		} */
+		
+		function getQuery() {
+			var url = document.location.href;
+		    var qs = url.substring(url.indexOf('?'));
+		    
+		    if (url.length == qs.length)
+		    	return '';
+		    return qs;
 		}
 
 		function getPostList() {
 			const menuCd = $('#menuCd').attr('value');
-			/* log */
-			console.log(menuCd);
+			const get = getQuery();
 
 			$.ajax({
 				/* url : `/getPostList/${menuCd}`, */
-				url : "/getPostList/" + menuCd,
+				url : "/getPostList/" + menuCd + get,
 				type : "GET",
 				dataType : "json",
 				success : function(response) {
@@ -182,14 +192,14 @@
 							+ '<td class="col-1 text-center">'
 								+ value.postId
 							+ '</td>'
-							/* + '<td class="col-7">'
-								+ '<a href="/post/' + value.postId + '">'
+							+ '<td class="col-7">'
+								+ '<a href="/post/' + value.postId + get + '">'
 									+ value.postSubject
 								+ '</a>'
-							+ '</td>' */
-							+ '<td class="col-7" onclick="getPost(this)">'
-								+ value.postSubject
 							+ '</td>'
+							/* + '<td class="col-7" onclick="getPost(this)">'
+								+ value.postSubject
+							+ '</td>' */
 							+ '<td class="col-2 text-center">'
 								+ value.wrtrId
 							+ '</td>'
@@ -205,100 +215,6 @@
 				}
 			});
 		}
-		
-		function getPost(element) {
-			const postId = $(element).prev().text();
-			const urlData = get_query();
-			
-			$.ajax({
-				url : "/getPost/" + postId,
-				data : urlData,
-				type : "GET",
-				dataType : "json",
-				complete : function() {
-					console.log('complete');
-				},
-				success : function(response) {
-					console.log('success');
-					$('#postRow').html('');
-					$('#postRow').append(response);
-				},
-				error : function(response) {
-					console.log('error');
-					console.log(response);
-					$('#postRow').html('');
-					$('#postRow').html(response.responseText);
-				}
-			});
-		}
-		
-		function getReplyList() {
-			const postId = $('#postId').attr('value');
-			const replyYn = $('#replyYn').attr('value');
-			
-			if ("Y" == replyYn) {
-				$.ajax({
-					/* url : `/getReplyList/${postId}`, */
-					url : "/getReplyList/" + postId,
-					type : "GET",
-					dataType : "json",
-					success : function(response) {
-						/* log */
-						console.info(response);
-						$('#replyList').html('');
-						$.each(response, function(index, value) {
-							const date = new Date(value.wrtrDt);
-							$('#replyList').append(
-								'<div class="border-top py-2">' +
-									'<div class="font-weight-bold px-2">' + value.replyWrtrId + '</div>' +
-									'<div class="px-2">' + value.replyConts + '</div>' +
-								'</div>'
-							);
-						});
-					}
-				});
-			}
-		}
-		
-		function deletePost() {
-			const delYn = confirm("게시글을 삭제하시겠습니까?");
-			
-			if (delYn) {
-				$.ajax({
-					url : "/deletePost",
-					type : "POST",
-					dataType : "json",
-					data : {
-						postId : $('#postId').attr('value')
-					},
-					success : function(response) {
-						console.info(response);
-						alert(response.resultMsg);
-						/* getTestTableList(); */
-						history.back();
-					}
-				});
-			}
-		}
-		
-		/* function insertPost() {
-			$.ajax({
-				url : "/insertPost.json",
-				type : "POST",
-				dataType : "json",
-				data : {
-					col1 : $('#col1').val(),
-					col2 : $('#col2').val(),
-					col3 : $('#col3').val(),
-					col4 : $('#col4').val()
-				},
-				success : function(response) {
-					console.info(response);
-					alert(response.msg);
-					getTestTableList();
-				}
-			});
-		} */
 	</script>
 </body>
 </html>

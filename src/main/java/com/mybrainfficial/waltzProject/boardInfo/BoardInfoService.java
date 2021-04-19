@@ -1,6 +1,7 @@
 package com.mybrainfficial.waltzProject.boardInfo;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -16,8 +17,12 @@ public class BoardInfoService {
 		return boardInfoDAO.selectBoardInfo(vo);
 	}
 	
-	public List<BoardInfoVO> selectListBoardInfo(final BoardInfoVO vo) throws DataAccessException {
-		return boardInfoDAO.selectListBoardInfo(vo);
+	/*
+	 * public List<BoardInfoVO> selectListBoardInfo(final BoardInfoVO vo) throws
+	 * DataAccessException { return boardInfoDAO.selectListBoardInfo(vo); }
+	 */
+	public List<BoardInfoVO> selectListBoardInfo(final Map<String, Object> queryMap) throws DataAccessException {
+		return boardInfoDAO.selectListBoardInfo(queryMap);
 	}
 	
 	public List<PostVO> selectListPost(final BoardInfoVO vo) throws DataAccessException {

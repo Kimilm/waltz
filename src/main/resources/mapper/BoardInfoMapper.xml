@@ -9,12 +9,19 @@
 		AND A.DEL_YN = 'N'
 	</select>
 	
-	<select id="selectListBoardInfo" parameterType="BoardInfoVO" resultType="BoardInfoVO">
+	<select id="selectListBoardInfo" parameterType="hashMap" resultType="BoardInfoVO">
 		SELECT *
-		FROM waltz.TB_BOARD_INFO AS A
-		WHERE A.BRD_CD = #{brdCd, jdbcType=VARCHAR}
-		AND A.DEL_YN = 'N'
+		FROM waltz.TB_BOARD_INFO
+		WHERE DEL_YN = 'N'
+		<if test="menuCd != null">
+			AND BRD_CD = #{menuCd, jdbcType=VARCHAR}
+		</if>
+		<if test="search != null">
+			AND POST_SUBJECT LIKE #{search, jdbcType=VARCHAR}
+		</if>
 		ORDER BY POST_ID DESC
+		LIMIT #{limit, jdbcType=INTEGER}
+		OFFSET #{offset, jdbcType=INTEGER}
 	</select>
 
 	<!-- not work -->
