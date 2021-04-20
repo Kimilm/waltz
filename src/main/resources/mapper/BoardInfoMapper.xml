@@ -9,6 +9,13 @@
 		AND A.DEL_YN = 'N'
 	</select>
 	
+	<select id="selectBoardCount" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM waltz.TB_BOARD_INFO
+		WHERE BRD_CD = #{brdCd, jdbcType=VARCHAR}
+		AND DEL_YN = 'N';
+	</select>
+	
 	<select id="selectListBoardInfo" parameterType="hashMap" resultType="BoardInfoVO">
 		SELECT *
 		FROM waltz.TB_BOARD_INFO

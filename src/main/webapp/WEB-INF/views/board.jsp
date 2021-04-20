@@ -109,8 +109,8 @@
 									</table>
 
 									<div>
-										<ul
-											class="pagination pagination-sm justify-content-center mb-0">
+										<input type="hidden" id="postCount" value="${postCount[menuCd]}" />
+										<ul id="page" class="pagination pagination-sm justify-content-center mb-0">
 											<li class="page-item"><a class="page-link" href>&laquo;</a></li>
 											<li class="page-item"><a class="page-link" href>1</a></li>
 											<li class="page-item"><a class="page-link" href>2</a></li>
@@ -151,9 +151,10 @@
 		<script>
 		$(document).ready(function() {
 			getPostList();
+			setPages();
 		});
 		
-		/* function get_query(){
+		function getQueryMap(){
 		    var url = document.location.href;
 		    var qs = url.substring(url.indexOf('?') + 1).split('&');
 		    for(var i = 0, result = {}; i < qs.length; i++){
@@ -161,7 +162,7 @@
 		        result[qs[i][0]] = decodeURIComponent(qs[i][1]);
 		    }
 		    return result;
-		} */
+		}
 		
 		function getQuery() {
 			var url = document.location.href;
@@ -214,6 +215,48 @@
 					});
 				}
 			});
+		}
+		
+		function setPages() {
+			const menuCd = $('#menuCd').attr('value');
+			const postCount = $('#postCount').attr("value");
+			const pages = parseInt(postCount / 20) + 1;
+			
+			const param = getQueryMap();
+			let get = '';
+			let curPage = 1;
+			
+			if(param['search'] != null)
+				get = '&search=' + param['search'];
+			
+			if(param['page'] != null)
+				curPage = parseInt(param['page']); 
+			
+			$('#page').html('');
+			$('#page').append('<li id="prevPage" class="page-item"><a class="page-link" href>&laquo;</a></li>');
+			for(let i = 0; i < pages; ++i) {
+				const page = i + 1;
+				const url = menuCd + '?page=' + page + get;
+				
+				let listTagClass;
+				if (page != curPage)
+					listTagClass = "page-item";
+				else
+					listTagClass = "page-item active";
+				
+				$('#page').append(
+					'<li class="' + listTagClass + '">'
+						+ '<a class="page-link" href="/bbs/'+ url + '">'+ page +'</a>'
+					+ '</li>'
+				);
+			}
+			$('#page').append('<li id="nextPage" class="page-item"><a class="page-link" href>&raquo;</a></li>');
+			
+			if (curPage == 1)
+				$('#prevPage').addClass('disabled');
+				
+			if (curPage == pages)
+				$('#nextPage').addClass('disabled');
 		}
 	</script>
 </body>

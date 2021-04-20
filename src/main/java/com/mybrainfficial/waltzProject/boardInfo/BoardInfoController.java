@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -30,6 +32,31 @@ public class BoardInfoController {
 
 	@Autowired
 	BoardInfoService boardInfoService;
+	
+	/* paging total count */
+	@Autowired
+	private ServletContext application;
+	
+	@Autowired
+	private MenuInfoService menuInfoService;
+	
+	@PostConstruct
+	private void setPostCount() {
+		List<MenuInfoVO> menuList = menuInfoService.selectListMenuInfo("S");
+		
+		Map<String, Integer> postCount = new HashMap<>();
+		
+		for(MenuInfoVO vo : menuList) {
+			Integer count = boardInfoService.selectBoardCount(vo.getMenuCd());
+			postCount.put(vo.getMenuCd(), count);
+		}
+		
+		application.setAttribute("postCount", postCount);
+		
+		//log
+		System.out.println("#################### post count in application scope ####################");
+	}
+	/* paging total count */
 
 	/* 메인 화면 카드뷰 */
 	@RequestMapping("/main/{menuCd}")
@@ -74,7 +101,7 @@ public class BoardInfoController {
 			queryMap.put("search", '%' + ps.getSearch() + '%');
 		}
 		
-		Integer limit = 40;
+		Integer limit = 20;
 		queryMap.put("limit", limit);
 		
 		if (ps.getPage() != null) {

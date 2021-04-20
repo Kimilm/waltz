@@ -107,7 +107,7 @@
 									</table>
 
 									<div>
-										<ul class="pagination pagination-sm justify-content-center mb-0">
+										<ul id="page" class="pagination pagination-sm justify-content-center mb-0">
 											<li class="page-item"><a class="page-link" href>&laquo;</a></li>
 											<li class="page-item"><a class="page-link" href>1</a></li>
 											<li class="page-item"><a class="page-link" href>2</a></li>

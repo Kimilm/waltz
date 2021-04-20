@@ -13,6 +13,10 @@ public class BoardInfoService {
 	@Autowired
 	private BoardInfoDAO boardInfoDAO;
 	
+	public Integer selectBoardCount(final String brdCd) throws DataAccessException {
+		return boardInfoDAO.selectBoardCount(brdCd);
+	}
+	
 	public BoardInfoVO selectBoardinfo(final BoardInfoVO vo) throws DataAccessException {
 		return boardInfoDAO.selectBoardInfo(vo);
 	}

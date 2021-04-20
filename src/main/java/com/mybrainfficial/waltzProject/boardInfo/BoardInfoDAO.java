@@ -15,6 +15,10 @@ public class BoardInfoDAO {
 	
 	private static final String NS = BoardInfoDAO.class.getPackage().getName() + ".";
 	
+	public Integer selectBoardCount(final String brdCd) throws DataAccessException {
+		return this.sqlsession.selectOne(NS + "selectBoardCount", brdCd);
+	}
+	
 	public BoardInfoVO selectBoardInfo(final BoardInfoVO vo) throws DataAccessException {
 		return this.sqlsession.selectOne(NS + "selectBoardInfo", vo);
 	}
