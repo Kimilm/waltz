@@ -6,13 +6,17 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -60,6 +64,7 @@ public class BoardInfoController {
 
 	/* 메인 화면 카드뷰 */
 	@RequestMapping("/main/{menuCd}")
+	@ResponseBody
 	public List<BoardInfoVO> getBoardInfoList(@PathVariable("menuCd") String menuCd) {
 		/*
 		 * BoardInfoVO vo = new BoardInfoVO(); vo.setBrdCd(menuCd);
@@ -68,18 +73,20 @@ public class BoardInfoController {
 		 */
 		Map<String, Object> queryMap = new HashMap<>();
 		queryMap.put("menuCd", menuCd);
+		queryMap.put("limit", 10);	// 메인에는 최근 10개 항목만 보여줌
+		queryMap.put("offset", 0);
 		
-		return getBoardInfoList(queryMap);
+		return boardInfoService.selectListBoardInfo(queryMap);
 	}
 
 	/*
 	 * @ResponseBody public List<BoardInfoVO> getBoardInfoList(BoardInfoVO vo) {
 	 * return boardInfoService.selectListBoardInfo(vo); }
 	 */
-	@ResponseBody
-	public List<BoardInfoVO> getBoardInfoList(final Map<String, Object> queryMap) {
-		return boardInfoService.selectListBoardInfo(queryMap);
-	}
+	/*
+	 * @ResponseBody public List<BoardInfoVO> getBoardInfoList(final Map<String,
+	 * Object> queryMap) { return boardInfoService.selectListBoardInfo(queryMap); }
+	 */
 
 	/* 게시글 */
 	@RequestMapping(value = "/getPostList/{menuCd}", method = RequestMethod.GET)
@@ -101,18 +108,14 @@ public class BoardInfoController {
 			queryMap.put("search", '%' + ps.getSearch() + '%');
 		}
 		
-		Integer limit = 20;
+		Integer limit = 20;	// 게시글 20개씩 페이징 처리
 		queryMap.put("limit", limit);
 		
 		if (ps.getPage() != null) {
-			System.out.println(ps.getPage());		// log
-			
 			Integer offset = ps.getPage() - 1;
 			offset *= limit;
 			queryMap.put("offset", offset);
 		} else {
-			System.out.println(ps.getPage());		// log
-			
 			Integer offset = 0;
 			queryMap.put("offset", offset);
 		}
@@ -121,14 +124,22 @@ public class BoardInfoController {
 	}
 
 	/* read */
+	@Transactional
 	@RequestMapping(value = "/post/{postId}", method = RequestMethod.GET)
-	public String getPost(@PathVariable("postId") String postId, PageAndSearchVO ps, Model model) {
+	public String getPost(@CookieValue("view") String cookie, HttpServletResponse response, @PathVariable("postId") String postId, PageAndSearchVO ps, Model model) {
 		BoardInfoVO post = new BoardInfoVO();
 		post.setPostId(Integer.parseInt(postId));
+		
+		if (!cookie.contains("/" + postId + "/")) {
+			cookie += postId + "/";
+			// ++hitCnt
+			boardInfoService.updateBoardInfoHits(post);
+			response.addCookie(new Cookie("view", cookie));
+		}
+		
 		post = boardInfoService.selectBoardinfo(post);
 		
 		model.addAttribute("post", post);
-		model.addAttribute("menuCd", post.getBrdCd());
 
 		return "post";
 	}
@@ -136,7 +147,9 @@ public class BoardInfoController {
 	/* create */
 	@RequestMapping(value = "/bbs/{menuCd}/create")
 	public String newPost(@PathVariable("menuCd") String menuCd, Model model) {
-		model.addAttribute("menuCd", menuCd);
+		model.addAttribute("menuCd", menuCd);	
+		application.setAttribute(menuCd, (Integer)application.getAttribute(menuCd) + 1);
+		
 		return "newPostForm";
 	}
 
@@ -184,6 +197,8 @@ public class BoardInfoController {
 	@ResponseBody
 	public ResultVO deletePost(BoardInfoVO vo, HttpSession session) {
 		boardInfoService.deleteBoardInfo(vo);
+		application.setAttribute(vo.getBrdCd(), (Integer)application.getAttribute(vo.getBrdCd()) - 1);
+		
 		return MessageUtil.getSuccessCode();
 	}
 }

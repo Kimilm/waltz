@@ -85,6 +85,7 @@
 		  )
 	</insert>
 	
+	<!-- update -->
 	<update id="updateBoardInfo" parameterType="BoardInfoVO" >
 		UPDATE waltz.TB_BOARD_INFO
 		SET
@@ -102,6 +103,13 @@
 			UPDT_DT = SYSDATE()
 		WHERE
 		  	 POST_ID = #{postId, jdbcType=INTEGER}
+	</update>
+	
+	<!-- update -->
+	<update id="updateBoardInfoHits" parameterType="BoardInfoVO">
+		UPDATE waltz.TB_BOARD_INFO
+		SET HIT_CNT = HIT_CNT + 1
+		WHERE POST_ID = #{postId, jdbcType=INTEGER}
 	</update>
 	
 	<!-- logical delete -->

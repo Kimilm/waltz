@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -41,7 +43,7 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/user/main", method = RequestMethod.GET)
-	public String home(Locale locale, HttpSession session, Model model) {
+	public String home(Locale locale, HttpServletResponse response, HttpSession session, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		logger.debug("debug test");
 		logger.error("error test");
@@ -55,6 +57,12 @@ public class HomeController {
 		model.addAttribute("login", session.getAttribute("login"));
 		model.addAttribute("menuMt", session.getAttribute("menuMt"));
 		model.addAttribute("menuDt", session.getAttribute("menuDt"));
+		
+		Cookie cookie = new Cookie("view", "/");
+		cookie.setComment("조회 확인");
+		cookie.setMaxAge(60 * 60 * 24);	// 1 day
+		cookie.setPath("/post");
+		response.addCookie(cookie);
 
         return "main";
 	}

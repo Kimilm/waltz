@@ -81,8 +81,8 @@
 									<!-- Page Heading -->
 									<div
 										class="d-sm-flex align-items-center justify-content-between mb-4">
-										<p class="h3 mb-0 text-gray-800">${menuDt[menuCd].menuNm}</p>
-										<input id="menuCd" type="hidden" value="${menuCd}" />
+										<p class="h3 mb-0 text-gray-800">${menuDt[post.brdCd].menuNm}</p>
+										<input id="menuCd" type="hidden" value="${post.brdCd}" />
 									</div>
 
 									<table class="table table-hover table-sm">
@@ -118,9 +118,9 @@
 										</ul>
 									</div>
 									
-									<c:if test="${authMappInfo[menuCd += login.userGrpCd].updtYn eq 'Y'}">
+									<c:if test="${authMappInfo[post.brdCd += login.userGrpCd].updtYn eq 'Y'}">
 										<div class="float-right">
-											<a href="/bbs/${menuCd}/create" class="btn btn-sm btn-primary">글쓰기</a>
+											<a href="/bbs/${post.brdCd}/create" class="btn btn-sm btn-primary">글쓰기</a>
 										</div>
 									</c:if>
 							</div>
@@ -196,7 +196,8 @@
 					type : "POST",
 					dataType : "json",
 					data : {
-						postId : $('#postId').attr('value')
+						postId : $('#postId').attr('value'),
+						brdCd : $('#menuCd').attr('value')
 					},
 					success : function(response) {
 						console.info(response);

@@ -33,7 +33,9 @@
 						<div class="col-md-6 mb-4">
 							<div class="card shadow">
 								<div class="card-header border-left-primary py-3">
-									<h6 class="m-0 font-weight-bold text-primary">공지사항</h6>
+									<h6 class="m-0 font-weight-bold text-primary">
+										<a href="/bbs/ci_notice">공지사항</a>
+									</h6>
 								</div>
 								<div id="ci_notice" class="card-body">
 									<ul class="list-unstyled mb-0"></ul>
@@ -44,7 +46,9 @@
 						<div class="col-md-6 mb-4">
 							<div class="card shadow">
 								<div class="card-header border-left-primary py-3">
-									<h6 class="m-0 font-weight-bold text-primary">게임공지</h6>
+									<h6 class="m-0 font-weight-bold text-primary">
+										<a href="/bbs/gi_notice">게임공지</a>
+									</h6>
 								</div>
 								<div id="gi_notice" class="card-body">
 									<ul class="list-unstyled mb-0"></ul>
@@ -61,9 +65,11 @@
 						<div class="col-md-6 mb-4">
 							<div class="card shadow">
 								<div class="card-header border-left-primary py-3">
-									<h6 class="m-0 font-weight-bold text-primary">친선모집</h6>
+									<h6 class="m-0 font-weight-bold text-primary">
+										<a href="/bbs/ci_recruit">친선모집</a>
+									</h6>
 								</div>
-								<div id="ci_match" class="card-body">
+								<div id="ci_recruit" class="card-body">
 									<ul class="list-unstyled mb-0"></ul>
 								</div>
 							</div>
@@ -72,7 +78,9 @@
 						<div class="col-md-6 mb-4">
 							<div class="card shadow">
 								<div class="card-header border-left-primary py-3">
-									<h6 class="m-0 font-weight-bold text-primary">자유게시판</h6>
+									<h6 class="m-0 font-weight-bold text-primary">
+										<a href="/bbs/cmnt_free">자유게시판</a>
+									</h6>
 								</div>
 								<div id="cmnt_free" class="card-body">
 									<ul class="list-unstyled mb-0"></ul>
@@ -105,7 +113,7 @@
 	$(document).ready(function() {
 		getPostList('ci_notice');
 		getPostList('gi_notice');
-		getPostList('ci_match');
+		getPostList('ci_recruit');
 		getPostList('cmnt_free');
 	});
 	
@@ -113,7 +121,7 @@
 		
 		$.ajax({
 			/* url : `/getPostList/${menuCd}`, */
-			url : "/getPostList/" + menuCd,
+			url : "/main/" + menuCd,
 			type : "GET",
 			dataType : "json",
 			success : function(response) {

@@ -26,55 +26,6 @@
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
-					<%-- <c:if test="${post ne null}"> --%>
-					<!-- Content Row -->
-					<div class="row" id="postRow">
-						<%-- <div class="col-md-12 mb-4">
-								<div class="card">
-									<div class="card-body">
-										<!-- title -->
-										<div>
-											<h3 class="px-2">${post.postSubject}</h3>
-											<input id="postId" type="hidden" value="${post.postId}" />
-											<input id="replyYn" type="hidden" value="${post.replyYn}" />
-										</div>
-										<!-- contents -->
-										<div>
-											<div class="border-bottom">
-												<div class="d-flex justify-content-between px-2">
-													<div>${post.wrtrId}</div>
-													<div>${post.hitCnt}${post.wrtrDt}</div>
-												</div>
-											</div>
-											<div class="p-2">${post.postConts}</div>
-										</div>
-										<!-- comment -->
-										<div>
-											<div class="border-top px-2">comment</div>
-											<div id="replyList">
-
-											</div>
-											<div id="CreateComment" class="input-group mt-2">
-												<input class="form-control" type="text" placeholder="comment Contents"></input>
-												<div class="input-group-append">
-													<button class="btn btn-outline-secondary" onclick="">insert</button>
-												</div>
-											</div>
-										</div>
-										<c:if test="${post.wrtrId eq login.userId}">
-											<div class="d-flex float-right mt-3">
-												<a href="#" class="btn btn-sm btn-primary mr-1">답글</a>
-												<a href="/updatePost/${post.postId}" class="btn btn-sm btn-info mr-1" onclick="updatePost()">수정</a>
-												<button onclick="deletePost()" class="btn btn-sm btn-danger">삭제</button>
-											</div>
-										</c:if>
-									</div>
-								</div>
-							</div> --%>
-					</div>
-					<!-- End Content Row -->
-					<%-- </c:if> --%>
-
 					<!-- Content Row -->
 					<div class="row">
 						<div class="col-md-12 mb-4">
@@ -107,27 +58,42 @@
 											</tr>
 										</tbody>
 									</table>
-
-									<div>
-										<input type="hidden" id="postCount" value="${postCount[menuCd]}" />
-										<ul id="page" class="pagination pagination-sm justify-content-center mb-0">
-											<li class="page-item"><a class="page-link" href>&laquo;</a></li>
-											<li class="page-item"><a class="page-link" href>1</a></li>
-											<li class="page-item"><a class="page-link" href>2</a></li>
-											<li class="page-item"><a class="page-link" href>3</a></li>
-											<li class="page-item"><a class="page-link" href>4</a></li>
-											<li class="page-item"><a class="page-link" href>5</a></li>
-											<li class="page-item"><a class="page-link" href>&raquo;</a></li>
-										</ul>
-									</div>
-
-									<c:if
-										test="${authMappInfo[menuCd += login.userGrpCd].updtYn eq 'Y'}">
-										<div class="float-right">
-											<a href="/bbs/${menuCd}/create"
-												class="btn btn-sm btn-primary">글쓰기</a>
+									
+									<div class="row">
+										<div class="col-md-4">
+											<form class="form-inline mr-auto w-100 navbar-search" action="/bbs/${menuCd}" method="GET">
+												<div class="input-group">
+													<input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" id="search" name="search">
+													<div class="input-group-append">
+														<button class="btn btn-primary" type="button">
+															<i class="fas fa-search fa-sm"></i>
+														</button>
+													</div>
+												</div>
+											</form>
 										</div>
-									</c:if>
+										
+										<div class="col-md-4">
+											<input type="hidden" id="postCount" value="${postCount[menuCd]}" />
+											<ul id="page" class="pagination pagination-sm justify-content-center mb-0">
+												<li class="page-item"><a class="page-link" href>&laquo;</a></li>
+												<li class="page-item"><a class="page-link" href>1</a></li>
+												<li class="page-item"><a class="page-link" href>2</a></li>
+												<li class="page-item"><a class="page-link" href>3</a></li>
+												<li class="page-item"><a class="page-link" href>4</a></li>
+												<li class="page-item"><a class="page-link" href>5</a></li>
+												<li class="page-item"><a class="page-link" href>&raquo;</a></li>
+											</ul>
+										</div>
+										
+										<div class="col-md-4">
+											<c:if test="${authMappInfo[menuCd += login.userGrpCd].updtYn eq 'Y'}">
+												<div class="float-right">
+													<a href="/bbs/${menuCd}/create"class="btn btn-sm btn-primary">글쓰기</a>
+												</div>
+											</c:if>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
