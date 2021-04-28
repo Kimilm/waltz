@@ -48,6 +48,10 @@ public class BoardInfoDAO {
 		return this.sqlsession.update(NS + "updateBoardInfoHits", vo);
 	}
 	
+	public int updateBoardInfoReplyYn (final BoardInfoVO vo) throws DataAccessException {
+		return this.sqlsession.update(NS + "updateBoardInfoReplyYn", vo);
+	}
+	
 	public int deleteBoardInfo (final BoardInfoVO vo) throws DataAccessException {
 		return this.sqlsession.update(NS + "deleteBoardInfo", vo);
 	}

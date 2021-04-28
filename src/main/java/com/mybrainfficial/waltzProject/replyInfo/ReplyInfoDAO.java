@@ -20,4 +20,17 @@ public class ReplyInfoDAO {
 	public List<ReplyInfoVO> selectReplyInfo(final BoardInfoVO vo) throws DataAccessException {
 		return this.sqlsession.selectList(NS + "selectReplyInfo", vo);
 	}
+	
+	public int insertReplyInfo(final ReplyInfoVO vo) throws DataAccessException {
+		return this.sqlsession.insert(NS + "insertReplyInfo", vo);
+	}
+	
+	public int updateReplyInfo(final ReplyInfoVO vo) throws DataAccessException {
+		return this.sqlsession.update(NS + "updateReplyInfo", vo);
+	}
+	
+	// logical delete
+	public int deleteReplyInfo(final ReplyInfoVO vo) throws DataAccessException {
+		return this.sqlsession.update(NS + "deleteReplyInfo", vo);
+	}
 }

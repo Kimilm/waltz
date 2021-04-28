@@ -54,9 +54,9 @@
 
 											</div>
 											<div id="CreateComment" class="input-group mt-2">
-												<input class="form-control" type="text" placeholder="comment Contents"></input>
+												<input id="replyConts" class="form-control" type="text" placeholder="comment Contents"></input>
 												<div class="input-group-append">
-													<button class="btn btn-outline-secondary" onclick="">insert</button>
+													<button class="btn btn-outline-secondary" onclick="createReply()">insert</button>
 												</div>
 											</div>
 										</div>
@@ -159,9 +159,52 @@
 		    return result;
 		} */
 		
+		function setReplyYn() {
+			const replyYn = $('#replyYn').attr('value');
+			
+			if ("N" == replyYn) {
+				$.ajax({
+					url : "/setReplyYn",
+					type : "POST",
+					dataType : "json",
+					data : {
+						postId : $('#postId').attr('value'),
+						replyYn : "Y"
+					},
+					success : function(response) {
+						/* log */
+						console.info(response);
+					}
+				});
+			}
+		}
+		
+		function createReply() {
+			setReplyYn();
+			
+			console.log($('#replyConts').val());
+			console.log($('#replyConts').attr('value'));
+			
+			$.ajax({
+				url : "/createReply",
+				type : "POST",
+				dataType : "json",
+				data : {
+					postId : $('#postId').attr('value'),
+					replyConts : $('#replyConts').val(),
+				},
+				success : function(response) {
+					/* log */
+					console.info(response);
+					location.reload()
+				}
+			});
+		}
+
 		function getReplyList() {
 			const postId = $('#postId').attr('value');
 			const replyYn = $('#replyYn').attr('value');
+			const userId = $('#userId').attr('value');
 			
 			if ("Y" == replyYn) {
 				$.ajax({
@@ -175,13 +218,76 @@
 						$('#replyList').html('');
 						$.each(response, function(index, value) {
 							const date = new Date(value.wrtrDt);
+							updateAndDelete = '';
+							
+							if (userId == value.replyWrtrId) {
+								updateAndDelete = '<div class="px-2"><span class="small" onclick="replyUpdateForm(this)">수정</span>&nbsp;<span class="small" onclick="replyDeleteAlert(this)">삭제</span></div>'
+							}
+							
 							$('#replyList').append(
 								'<div class="border-top py-2">' +
+									'<input type="hidden" value="' + value.replyId + '" />' +
 									'<div class="font-weight-bold px-2">' + value.replyWrtrId + '</div>' +
 									'<div class="px-2">' + value.replyConts + '</div>' +
+									updateAndDelete +
 								'</div>'
 							);
 						});
+					}
+				});
+			}
+		}
+		
+		function replyUpdateForm(e) {
+			const replyId = $(e).parent().parent().children().first().attr('value');
+			const replyConts = $(e).parent().prev().text();
+
+			const updateInput = '<div class="input-group">' + 
+					'<input id="replyId' + replyId + '" class="form-control" type="text" value="' + replyConts + '" />' +
+					'<div class="input-group-append">' +
+						'<button class="btn btn-outline-secondary" onclick="replyUpdate(' + replyId + ')">update</button>' +
+					'</div>'
+				'</div>';
+				
+			$(e).parent().prev().replaceWith(updateInput);
+		}
+		
+		function replyUpdate(replyId) {
+			const updateReplyId = '#replyId' + replyId;
+			
+			$.ajax({
+				url : "/updateReply",
+				type : "POST",
+				dataType : "json",
+				data : {
+					replyId : replyId,
+					replyConts : $(updateReplyId).val()
+				},
+				success : function(response) {
+					console.info(response);
+					alert(response.resultMsg);
+					getReplyList();
+				}
+			});
+		}
+		
+		function replyDeleteAlert(e) {
+			const replyId = $(e).parent().parent().children().first().attr('value');
+			
+			const delYn = confirm("댓글을 삭제하시겠습니까?");
+			
+			if (delYn) {
+				$.ajax({
+					url : "/deleteReply",
+					type : "POST",
+					dataType : "json",
+					data : {
+						replyId : replyId
+					},
+					success : function(response) {
+						console.info(response);
+						alert(response.resultMsg);
+						getReplyList();
 					}
 				});
 			}

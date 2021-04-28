@@ -6,6 +6,53 @@
 		SELECT *
 		FROM waltz.TB_REPLY_INFO
 		WHERE POST_ID = #{postId, jdbcType=INTEGER}
+		AND DEL_YN = 'N'
 		ORDER BY REPLY_SORT_ID
 	</select>
+	
+	<insert id="insertReplyInfo" parameterType="ReplyInfoVO" >
+		INSERT INTO waltz.TB_REPLY_INFO(
+			POST_ID,
+			REPLY_CONTS,
+			REPLY_SORT_ID,
+			REPLY_WRTR_ID,
+			REPLY_WRTR_DT,
+			DEL_YN,
+			CRT_ID,
+			CRT_DT,
+			UPDT_ID,
+			UPDT_DT
+		) VALUES (
+		  	 #{postId, jdbcType=INTEGER}, 
+		  	 #{replyConts, jdbcType=VARCHAR},
+		  	 ( SELECT COUNT(*) FROM waltz.TB_REPLY_INFO AS INSERT_SUB_SELECT WHERE POST_ID = #{postId, jdbcType=INTEGER} ) + 1,
+		  	 #{replyWrtrId, jdbcType=VARCHAR},
+		  	 SYSDATE(),
+		  	 'N',
+		  	 #{crtId, jdbcType=VARCHAR},
+		  	 SYSDATE(),
+		  	 null,
+		  	 null
+		)
+	</insert>
+	
+	<!-- update -->
+	<update id="updateReplyInfo" parameterType="ReplyInfoVO" >
+		UPDATE waltz.TB_REPLY_INFO
+		SET
+			REPLY_CONTS = #{replyConts, jdbcType=VARCHAR},
+			UPDT_ID = #{updtId, jdbcType=VARCHAR},
+			UPDT_DT = SYSDATE()
+		WHERE
+		  	 REPLY_ID = #{replyId, jdbcType=INTEGER}
+	</update>
+	
+	<!-- logical delete -->
+	<update id="deleteReplyInfo" parameterType="ReplyInfoVO" >
+		UPDATE waltz.TB_REPLY_INFO
+		SET
+			DEL_YN = 'Y'
+		WHERE
+		  	 REPLY_ID = #{replyId, jdbcType=INTEGER}
+	</update>
 </mapper>

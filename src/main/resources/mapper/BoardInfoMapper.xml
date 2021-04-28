@@ -63,26 +63,26 @@
 			UPDT_ID,
 			UPDT_DT
 		) VALUES (
-		  	 #{postId, jdbcType=INTEGER},
-		  	 #{brdCd, jdbcType=VARCHAR},
-		  	 null,
-		  	 'N',
-		  	 #{postSubject, jdbcType=VARCHAR},
-		  	 #{postConts, jdbcType=VARCHAR},
-		  	 #{wrtrId, jdbcType=VARCHAR},
-		  	 SYSDATE(),
-		  	 #{postDateFrom, jdbcType=VARCHAR},
-		  	 #{postDateTo, jdbcType=VARCHAR},
-		  	 #{imptncYn, jdbcType=VARCHAR},
-		  	 #{attachYn, jdbcType=VARCHAR},
-		  	 #{ansYn, jdbcType=VARCHAR},
-		  	 'N',
-		  	 0,
-		  	 #{crtId, jdbcType=VARCHAR},
-		  	 SYSDATE(),
-		  	 null,
-		  	 null
-		  )
+			#{postId, jdbcType=INTEGER},
+			#{brdCd, jdbcType=VARCHAR},
+			null,
+			'N',
+			#{postSubject, jdbcType=VARCHAR},
+			#{postConts, jdbcType=VARCHAR},
+			#{wrtrId, jdbcType=VARCHAR},
+			SYSDATE(),
+			#{postDateFrom, jdbcType=VARCHAR},
+			#{postDateTo, jdbcType=VARCHAR},
+			#{imptncYn, jdbcType=VARCHAR},
+			#{attachYn, jdbcType=VARCHAR},
+			#{ansYn, jdbcType=VARCHAR},
+			'N',
+			0,
+			#{crtId, jdbcType=VARCHAR},
+			SYSDATE(),
+			null,
+			null
+		)
 	</insert>
 	
 	<!-- update -->
@@ -102,15 +102,21 @@
 			UPDT_ID = #{updtId, jdbcType=VARCHAR},
 			UPDT_DT = SYSDATE()
 		WHERE
-		  	 POST_ID = #{postId, jdbcType=INTEGER}
+			POST_ID = #{postId, jdbcType=INTEGER}
 	</update>
 	
-	<!-- update -->
 	<update id="updateBoardInfoHits" parameterType="BoardInfoVO">
 		UPDATE waltz.TB_BOARD_INFO
 		SET HIT_CNT = HIT_CNT + 1
 		WHERE POST_ID = #{postId, jdbcType=INTEGER}
 	</update>
+	
+	<update id="updateBoardInfoReplyYn" parameterType="BoardInfoVO">
+		UPDATE waltz.TB_BOARD_INFO
+		SET REPLY_YN = #{replyYn, jdbcType=VARCHAR},
+		WHERE POST_ID = #{postId, jdbcType=INTEGER}
+	</update>
+	<!-- update -->
 	
 	<!-- logical delete -->
 	<update id="deleteBoardInfo" parameterType="BoardInfoVO" >

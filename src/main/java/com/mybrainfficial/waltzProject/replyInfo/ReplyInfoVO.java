@@ -9,6 +9,7 @@ public class ReplyInfoVO implements Serializable {
 	private String replyConts;
 	private int replySortId;
 	private String replyWrtrId;
+	private Date replyWrtrDt;
 	private String delYn;
 	private String crtId;
 	private Date crtDt;
@@ -44,6 +45,12 @@ public class ReplyInfoVO implements Serializable {
 	}
 	public void setReplyWrtrId(String replyWrtrId) {
 		this.replyWrtrId = replyWrtrId;
+	}
+	public Date getReplyWrtrDt() {
+		return replyWrtrDt;
+	}
+	public void setReplyWrtrDt(Date replyWrtrDt) {
+		this.replyWrtrDt = replyWrtrDt;
 	}
 	public String getDelYn() {
 		return delYn;

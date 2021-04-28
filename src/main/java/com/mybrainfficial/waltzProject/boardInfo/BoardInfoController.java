@@ -191,6 +191,13 @@ public class BoardInfoController {
 		int result = boardInfoService.updateBoardInfo(vo);
 		return MessageUtil.getMessage(result);
 	}
+	
+	@RequestMapping(value="/setReplyYn", method=RequestMethod.POST)
+	@ResponseBody
+	public ResultVO setReplyYn(BoardInfoVO vo) {
+		int result = boardInfoService.updateBoardInfoReplyYn(vo);
+		return MessageUtil.getMessage(result);
+	}
 
 	/* delete */
 	@RequestMapping(value = "/deletePost", method = RequestMethod.POST)
